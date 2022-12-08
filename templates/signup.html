@@ -1,0 +1,43 @@
+<html><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, width=device-width">
+  <title>GalBul Kayıt Sayfası</title>
+  <meta name="description" content="">
+
+  <link rel="stylesheet" href="/static/signupstyle.css">
+
+  <link rel="icon" href="/static/logo.png">
+  <title>GalBul Kayıt Sayfası</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap">
+</head>
+<body>
+  <form action="/kayit" method="post">
+    <div class="demo-signup-page">
+      <div class="rectangle-div"></div>
+      <div class="rectangle-div1"></div>
+      <b class="proxlight-b" style="display: flex; justify-items: center; align-items: center;">GalBul Kayıt Sayfası</b><button class="rectangle-button" id="rectangleButton"></button>
+      <input class="rectangle-input" type="text">
+      <input class="rectangle-input1" type="email">
+      <input class="rectangle-input2" type="password">
+      <input class="rectangle-input4" type="password">
+      <div class="repassword-div">Şifre Yeniden</div>
+      <div class="name-div">Kullanıcı Adı</div>
+      <div class="email-div">E-mail</div>
+      <div class="password-div">Şifre</div>
+     
+    <b class="sign-up-b" style="cursor: pointer;">Kayıt ol</b>
+    <p class="hesapli" onclick="window.location.href='/giris'">Zaten hesabım var</p>
+    </div>
+  </form>
+  <script>
+    var rectangleButton = document.getElementById("rectangleButton");
+    if (rectangleButton) {
+      rectangleButton.addEventListener("click", function () {
+        window.location.href = "/";
+      });
+    };
+
+ 
+    </script>
+
+</body></html>

@@ -1,0 +1,27 @@
+<html lang="tr">
+<head>
+  <style>
+    #mapid {
+      height: 100%;
+      width: 100%
+    }
+  </style>
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+  <script src="https://d3js.org/topojson.v0.min.js"></script>
+  <link rel="stylesheet" href="https://npmcdn.com/leaflet@1.0.0-rc.2/dist/leaflet.css" />
+  <meta name=application-name content="GalBul">
+  <script src="https://npmcdn.com/leaflet@1.0.0-rc.2/dist/leaflet.js"></script>
+
+  <link rel="icon" href="{{ url_for('static',filename='logo.png') }}">
+  <title>GalBul ~ Server</title>
+  <!--<script src="../static/js/parseldeneme.js"></script> salih ne alaka bu ister flasktan ayarla ister htmle url_for() koy olm  :D -->
+</head>
+<body>
+<form method="POST" id="dosyaform" enctype="multipart/form-data">
+  <input type="file" name="dosya">
+  <input type="submit">
+</form>
+<div id="mapid"></div>
+<script src="{{ url_for('static', filename='index.js') }}"></script>
+</body>
+</html>
