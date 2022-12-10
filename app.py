@@ -65,8 +65,8 @@ def register():
 
     return render_template('register_index.html')
 
-@app.route('/profile', methods=["GET"])
 @login_required
+@app.route('/profile', methods=["GET"])
 def profile():
 
     return render_template('profile.html')
@@ -111,8 +111,8 @@ def allowed_file(filename):
 def guest():
     return render_template('guest.html')
 
-@app.route('/home', methods=['GET', 'POST'])
 @login_required
+@app.route('/home/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
         dosya = request.files['dosya']
