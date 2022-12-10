@@ -12,11 +12,21 @@ from flask import (
     send_from_directory
 )
 from werkzeug.utils import secure_filename
+from functools import wraps
 import pymongo
-app = Flask(__name__)
 #################################
 ##### I'M WORTHLESS GUY :') #####
 #################################
+
+def login_required(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'logged_in' in session:
+            return f(*args, **kwargs)
+        else:
+            flash("You need to login")
+            return render_template('guest.html')
+
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 ERR_CODES = [400, 401, 403, 404, 500, 502, 503, 504]
@@ -54,6 +64,12 @@ def register():
     })
 
     return render_template('register_index.html')
+
+@app.route('/profile', methods=["GET"])
+@login_required
+def profile():
+
+    return render_template('profile.html')
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -96,6 +112,7 @@ def guest():
     return render_template('guest.html')
 
 @app.route('/home', methods=['GET', 'POST'])
+@login_required
 def index():
     if request.method == 'POST':
         dosya = request.files['dosya']
