@@ -4,14 +4,15 @@
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="icon" href="{{ url_for('static',filename='logo.png') }}">
+    <link rel="stylesheet" href="/static/css/profile.css">
+    <link rel="icon" href="{{ url_for('static',filename='logo.png') }}">
    <title>Giriş Başarılı!</title>
 </head>
 <body>
 <script>
    window.alert("Giriş başarılı");
    setTimeout(() => {
-      window.location.href = '/home';
+      window.location.href = '/home/';
    },2000)
 </script>
 </body>

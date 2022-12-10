@@ -11,6 +11,7 @@ from flask import (
     jsonify,
     send_from_directory
 )
+import uuid
 from werkzeug.utils import secure_filename
 from functools import wraps
 import bcrypt
@@ -60,16 +61,28 @@ def register():
         'username': username,
         'password': hashed_password,
         'email': email,
-        'parselNo': parselNo
+        'parselNo': parselNo,
+        "_id": str(uuid.uuid4())
     })
 
     return render_template('register_index.html')
 
+def get_session_user():
+    if 'user_id' not in session:
+        return None
+    user_id = session['user_id']
+    # fetch the user from database somehow
+    user = db.users.find_one({
+        '_id': user_id
+    })
+    return user
+
 @login_required
+@app.route('/profile/')
 @app.route('/profile', methods=["GET"])
 def profile():
-
-    return render_template('profile.html')
+    user = get_session_user()
+    return render_template('profile.html', user=user)
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -107,12 +120,13 @@ def giris():
 def allowed_file(filename):
     return ('.' in filename) and (filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS)
 
+@app.route('/ziyaretci')
 @app.route('/', methods = ["GET"])
 def guest():
     return render_template('guest.html')
 
-@login_required
-@app.route('/home', methods=['GET', 'POST'])
+@app.route('/home')
+@app.route('/home/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
         dosya = request.files['dosya']
