@@ -68,6 +68,7 @@ def login():
     if user and bcrypt.checkpw(password.encode('utf-8'), user['password']):
         # Add the user's id to the session
         session['user_id'] = str(user['_id'])
+        session['']
         return render_template('login_success.html')
     else:
         return render_template('login_error.html')
