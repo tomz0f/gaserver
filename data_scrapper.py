@@ -18,7 +18,7 @@ data = np.ndarray([], np.uint32)
 for i in range(len(df)):
    data = np.append(data, df.loc[i])
 
-data = data.tolist()
+data = data.tolist()             #because 0 index is np.ndarray initalize value given by default.
 data = [data[i:i+4] for i in range(1, len(data), 4)]
 print(data)
 
