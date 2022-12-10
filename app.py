@@ -13,6 +13,7 @@ from flask import (
 )
 from werkzeug.utils import secure_filename
 from functools import wraps
+import bcrypt
 import pymongo
 #################################
 ##### I'M WORTHLESS GUY :') #####
@@ -35,7 +36,6 @@ db_link = "mongodb+srv://yigit:yigitinsifresi@projectdatabasegalbul.ixx82u7.mong
 client = pymongo.MongoClient(db_link)
 db = client.galbul
 
-import bcrypt
 app = Flask(__name__, instance_relative_config=True)
 # default value during development
 app.secret_key = 'yigitinsifresi'
@@ -112,7 +112,7 @@ def guest():
     return render_template('guest.html')
 
 @login_required
-@app.route('/home/', methods=['GET', 'POST'])
+@app.route('/home', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
         dosya = request.files['dosya']
