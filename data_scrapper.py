@@ -22,8 +22,7 @@ data = data.tolist()             #because 0 index is np.ndarray initalize value 
 data = [data[i:i+4] for i in range(1, len(data), 4)]
 print(data)
 
-with open('data.txt', 'w+', encoding="utf-8") as f:
+with open('data.csv', 'w+', encoding="utf-8") as f:
    for i in data:
       string = str(i[0]) +","+ str(i[1]) +","+ str(i[2]) +","+ str(i[3])
-      f.writelines(string)
-      f.write("\n")
+      f.write(string+'\n')
