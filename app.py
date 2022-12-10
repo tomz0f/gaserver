@@ -11,15 +11,9 @@ from flask import (
     jsonify,
     send_from_directory
 )
-from functools import wraps
 from werkzeug.utils import secure_filename
 import pymongo
-db_link = "mongodb+srv://yigit:yigitinsifresi@projectdatabasegalbul.ixx82u7.mongodb.net/test"
-client = pymongo.MongoClient(db_link)
-db = client.user_login_system
-
 app = Flask(__name__)
-app.secret_key = b'\xcc^\x91\xea\x17-\xd0W\x03\xa7\xf8J0\xac8\xc5'
 #################################
 ##### I'M WORTHLESS GUY :') #####
 #################################
@@ -27,47 +21,81 @@ app.secret_key = b'\xcc^\x91\xea\x17-\xd0W\x03\xa7\xf8J0\xac8\xc5'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 ERR_CODES = [400, 401, 403, 404, 500, 502, 503, 504]
 
-def login_required(f):
-  @wraps(f)
-  def wrap(*args, **kwargs):
-    if 'logged_in' in session:
-      return f(*args, **kwargs)
+db_link = "mongodb+srv://yigit:yigitinsifresi@projectdatabasegalbul.ixx82u7.mongodb.net/test"
+client = pymongo.MongoClient(db_link)
+db = client.galbul
+
+import bcrypt
+app = Flask(__name__, instance_relative_config=True)
+# default value during development
+app.secret_key = 'yigitinsifresi'
+# overridden if this file exists in the instance folder
+app.config.from_pyfile('config.py', silent=True)
+# Set up a MongoDB client and database
+
+# Define the routes for registering, logging in, and logging out users
+@app.route('/register', methods=['POST'])
+def register():
+    # Get the user's information from the request
+    username = request.form['username']
+    password = request.form['password']
+    email = request.form['email']
+    parselNo = request.form['parselNo']
+
+    # Hash the password with bcrypt
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
+    # Add the user to the database
+    db.users.insert_one({
+        'username': username,
+        'password': hashed_password,
+        'email': email,
+        'parselNo': parselNo
+    })
+
+    return render_template('register_index.html')
+
+@app.route('/login', methods=['POST'])
+def login():
+    # Get the user's information from the request
+    username = request.form['username']
+    password = request.form['password']
+
+    # Retrieve the user from the database
+    user = db.users.find_one({'username': username})
+
+    # Check that the user exists and the password is correct
+    if user and bcrypt.checkpw(password.encode('utf-8'), user['password']):
+        # Add the user's id to the session
+        session['user_id'] = str(user['_id'])
+        return render_template('login_success.html')
     else:
-      return redirect('/')
-  
-  return wrap
+        return render_template('login_error.html')
 
-from user import routes
+@app.route('/logout', methods=['GET'])
+def logout():
+    # Remove the user's id from the session
+    session.pop('user_id', None)
+    return render_template('logout.html')
 
-@app.route('/dashboard')
-@login_required
-def dashboard():
-    return render_template("dashboard.html")
-
-@app.route('/home')
-def home():
-    return render_template('home.html')
-
-@app.route('/kayit', methods = ["GET", "POST"])
+@app.route('/kayit', methods = ["GET"])
 def kayit():
     if request.method == "GET":
         return render_template('signup.html')
 
-    if request.method == "POST":
-        return render_template('redirect_index.html')
-
-@app.route('/giris', methods=["GET", "POST"])
+@app.route('/giris', methods=["GET"])
 def giris():
     if request.method == "GET":
         return render_template('login.html')
 
-    if request.method == "POST":
-
-        return render_template('redirect_index.html')
 def allowed_file(filename):
     return ('.' in filename) and (filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS)
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods = ["GET"])
+def guest():
+    return render_template('guest.html')
+
+@app.route('/home', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
         dosya = request.files['dosya']

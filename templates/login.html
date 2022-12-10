@@ -1,45 +1,32 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1, width=device-width" />
-    <title>GalBul Giriş Sayfası</title>
-    <meta name="description" content="" />
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='loginstyle.css') }}" />
-
-    <link rel="icon" href="{{ url_for('static', filename='logo.png') }}" />
-    <title>GalBul ~ Server</title>
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
-    />
-  </head>
-  <body>
-    <form action="/kayit" method="post">
-      <div class="demo-login-page">
-        <div class="rectangle-div"></div>
-        <div class="rectangle-div1"></div>
-        <b class="proxlight-b" style="display: flex; justify-items: center; align-items: center;">GalBul Giriş Sayfası</b
-        ><button class="rectangle-button" id="rectangleButton"></button
-        ><input class="rectangle-input" type="text" /><input
-          class="rectangle-input1"
-          type="email"
-        />
-        <div class="name-div"><b>Kullanıcı Adı</b> veya <b>E-mail</b></div>
-        <div class="password-div"><b>Şifre</b></div>
-      <b class="sign-up-b" style="cursor: pointer;">Giriş Yap</b>
-      <p class="hesapli" onclick="window.location.href='/kayit  '">Hesabın yok mu?</p>
-
-      </div>
-    </form>
-    <script>
-      var rectangleButton = document.getElementById("rectangleButton");
-      if (rectangleButton) {
-        rectangleButton.addEventListener("click", function () {
-          window.location.href = "/";
-        });
-      }
-      </script>
-  </body>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form </title>
+    <link rel="stylesheet" href="/static/css/loginsignupstyle.css">
+    <link rel="icon" href="{{ url_for('static',filename='logo.png') }}">
+    
+</head>
+<body>
+    <div class="login-box">
+        <h2>GalBul Giriş Formu</h2>
+        <form action="/login" method="POST">
+            <div class="user-box">
+                <input type="text" name="username" placeholder="Kullanıcı Adı" required="">
+            </div>
+            <div class="user-box">
+                <input type="password" name="password" placeholder="Şifre" required="">
+            </div>
+            <a href="#">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <input type="submit" value="Giriş yap!"/>
+            </a>
+        </form>
+    </div>
+</body>
 </html>
