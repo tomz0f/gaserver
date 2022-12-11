@@ -19,7 +19,7 @@
  }
 
 body {
-   background-color: rgb(34, 34, 34);
+   background-color: white;
 }
 
 span img{
@@ -36,6 +36,8 @@ span img{
   span img {
       width: 95%;
   }
+
+  
 }
 
 .exitbtn {

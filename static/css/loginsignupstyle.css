@@ -1,6 +1,21 @@
 html{
     height: 100%;
 }
+
+@media (max-width: 320px) {   
+    .login-box {
+        width: 93% !important;
+        height: 55%;
+    }
+}
+h2 {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+}
+
+div {
+    margin-top: 1rem !important;
+}
 body{
     margin: 0;
     padding: 0;

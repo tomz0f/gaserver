@@ -68,6 +68,31 @@ def register():
 
     return render_template('register_index.html')
 
+@login_required
+@app.route('/complaint', methods=["POST"])
+def sikayet():
+    title = request.form['title']
+    content = request.form['content']
+    comp_user = request.form['comp_user']
+    complainant = request.form['complainant']
+
+    dosya = request.files['fileupload']
+    dosya_adi = dosya.filename
+    complaint_case = str(uuid.uuid4())
+    if allowed_file(dosya_adi):
+        dosya.save('webimgs/'+complaint_case+'.jpg')
+    else:
+        return render_template('upload_error.html')
+    db.complaints.insert_one({
+        "_id": complaint_case,
+        "title": title,
+        "content": content,
+        "comp_user": comp_user,
+        "complainant": complainant
+    })
+
+    return render_template('complaint_sucess.html')
+
 def get_session_user():
     if 'user_id' not in session:
         return None
@@ -85,9 +110,9 @@ def profile(user_id):
     return render_template('profile.html', user=user)
 
 @app.route('/sikayet/<string:comp_user_id>', methods=["GET", "POST"])
-def compliment(comp_user_id):
+def complaintt(comp_user_id):
     user = get_session_user()
-    return render_template('compliment.html', user=user, sikayet=get_user_from_id(comp_user_id))
+    return render_template('complaint.html', user=user, sikayet=get_user_from_id(comp_user_id))
 
 def get_user_from_id(user_id):
     return db.users.find_one({

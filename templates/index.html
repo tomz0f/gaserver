@@ -2,30 +2,63 @@
 <head>
   <script src="https://d3js.org/d3.v3.min.js"></script>
   <script src="https://d3js.org/topojson.v0.min.js"></script>
-  <link rel="stylesheet" href="https://npmcdn.com/leaflet@1.0.0-rc.2/dist/leaflet.css" />
+  <link rel="stylesheet" href="/static/css/leaflet.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
   <meta name=application-name content="GalBul">
-  <script src="https://npmcdn.com/leaflet@1.0.0-rc.2/dist/leaflet.js"></script>
+  <script src="/static/js/leaflet.js"></script>
   <link rel="stylesheet" href="/static/css/index.css">
   <link rel="icon" href="{{ url_for('static',filename='logo.png') }}">
   <title>GalBul ~ Ana Sayfa</title>
   <!--<script src="../static/js/parseldeneme.js"></script> salih ne alaka bu ister flasktan ayarla ister htmle url_for() koy olm  :D -->
 </head>
 <body>
-<form style="display: inline-block;" method="POST" id="dosyaform" enctype="multipart/form-data">
-  <input type="file" name="dosya">
-  <input style="background-color: #2fe203; color:white; border: 1px solid black; border-radius: 20px;" type="submit" value="Gönder">
-</form>
-<a href="/logout" style="position: relative; left:88%; padding-bottom: 10px; display: inline-block; position: absolute;">
-  <button class="exitbtn">
-    Çıkış yap
-  </button>
-</a>
-<a href="/profile/{{user._id}}" style="margin-left: 5%;">
-  <span>
-    <img src="https://avatars.dicebear.com/api/micah/{{user._id}}.svg" style="display:inline-block; margin-left: 5%; position: fixed; top: 10px; right: 15px; width:36px; height:36px; background-color: #2fe203; border: 1px solid white; border-radius: 50%;" alt="{{user.username}}" />
-  </span>
-</a>
+<nav class="navbar navbar-dark bg-light justify-content-between">
+    <form style="display: inline-block;" method="POST" class="navbar-brand" id="dosyaform" enctype="multipart/form-data">
+      <input type="file" name="dosya" onchange="submit_form()">
+    </form>
+    <form class="form-inline" style="display: flex; align-items: center;">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Profili Bul!</button>
+    </form>
+    
+    
+    <a href="/profile/{{user._id}}" style="margin-left: 5%;">
+      <span>
+        <img src="https://avatars.dicebear.com/api/micah/{{user._id}}.svg" style="display:inline-block; margin-left: 5%; position: fixed; top: 10px; right: 15px; width:2.5rem; height:2.5rem; background-color: #2fe203; border: 1px solid white; border-radius: 50%;" alt="{{user.username}}" />
+      </span>
+    </a>
+</nav>
 <div id="mapid" style="border-radius: 25px; width: 100%; height: 100%;"></div>
-<script src="{{ url_for('static', filename='index.js') }}"></script>
+<script src="/static/js/index.js"></script>
+<script>
+var form = document.querySelector('#dosyaform');
+
+mymap.locate({ setView: true , watch: true, maxZoom: 19,enableHighAccuracy: true});
+navigator.geolocation.getCurrentPosition(function(location, options = {
+  enableHighAccuracy: true,
+  timeout: 500,
+  maximumAge: 0
+}) {
+  let lat = location.coords.latitude;
+  let lng = location.coords.longitude;
+  let accuracy = location.coords.accuracy;
+
+  let blueIcon = new L.Icon({
+      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
+      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
+  });
+  let latLng = new L.LatLng(lat, lng);
+  L.marker(latLng, {icon: blueIcon}).bindPopup(`Şu anki konumun<br>Lat:${lat} Lng:${lng}`).addTo(mymap);
+});
+
+function submit_form(){
+  form.submit();
+}
+</script>
 </body>
 </html>
