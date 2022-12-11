@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static',filename='logo.png') }}">
+    <link rel="stylesheet" href="/static/css/loginsignupstyle.css">
+    <style>
+        textarea {
+            background-color: #1fbb00;
+            border-radius: 2.5%;
+            border: 1px dotted white;
+            margin-top: 1rem;
+            padding-top: 1rem;
+        }
+
+        .login-box {
+            width: 98%;
+            height: 93%;
+        }
+        
+        #sikayetform {
+            width: 98%;
+            height: 93%;
+        }
+        input[type=file]::file-selector-button {
+            margin-right: 20px;
+            border: none;
+            background: #2fe203;
+            padding: 10px 20px;
+            border-radius: 10px;
+            color: #fff;
+            cursor: pointer;
+            transition: background .2s ease-in-out;
+        }
+
+        input[type=file]::file-selector-button:hover {
+            background: #068806;
+        }
+
+        input[type=submit] {
+            font-size: 1.5rem;
+        }
+
+    </style>
+    <title>{{user.username}}'in Şikayeti | GalBul</title>
+</head>
+<body>
+<div class="login-box">
+   <form action="/compliment" method="POST" id="sikayetform">
+        <div class="user-box">
+            <input type="text" name="title" placeholder="Şikayet Başlığı" required="">
+        </div>
+        <div class="user-box">
+            <input type="file" name="fileupload">
+        </div>
+        <div style="display: inline-block;">
+            <textarea rows="7" cols="40" name="content" form="sikayetform"></textarea>
+        </div>
+        <a href="#">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <input type="submit" value="Şikayet Et!"/>
+        </a>
+    </form>
+</div>
+</body>
+</html>

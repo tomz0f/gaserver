@@ -84,6 +84,11 @@ def profile():
     user = get_session_user()
     return render_template('profile.html', user=user)
 
+@app.route('/sikayet', methods=["GET", "POST"])
+def compliment():
+    user = get_session_user()
+    return render_template('compliment.html', user=user)
+
 @app.route('/login', methods=['POST'])
 def login():
     # Get the user's information from the request
