@@ -31,18 +31,10 @@
           </ul>
 
           <div class="content">
-            <p>
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam
-              erat volutpat. Morbi imperdiet, mauris ac auctor dictum, nisl
-              ligula egestas nulla.
-            </p>
+            <pre>
+               {{user.bio}}
+            </pre>
 
-            <ul>
-              <li><i class="fab fa-twitter"></i></li>
-              <i class="fab fa-pinterest"></i>
-              <i class="fab fa-facebook"></i>
-              <i class="fab fa-dribbble"></i>
-            </ul>
           </div>
         </div>
         <div class="right__col">
@@ -50,7 +42,7 @@
             <ul>
               <li><a href="">Gönderilenler</a></li>
             </ul>
-            <a href="/sikayet">  <button>Şikayet Et!</button> </a>
+            <a href="/sikayet/{{user._id}}">  <button>Şikayet Et!</button> </a>
           </nav>
 
           <div class="photos">

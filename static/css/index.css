@@ -1,0 +1,55 @@
+#mapid {
+   height: 100%;
+   width: 100%
+ }
+ input[type=file]::file-selector-button {
+   margin-right: 20px;
+   border: none;
+   background: #2fe203;
+   padding: 10px 20px;
+   border-radius: 10px;
+   color: #fff;
+   cursor: pointer;
+   transition: background .2s ease-in-out;
+ }
+
+ input[type=file]::file-selector-button:hover {
+   background: #068806;
+   color: white;
+ }
+
+body {
+   background-color: rgb(34, 34, 34);
+}
+
+span img{
+  width: 90px;
+  height: 90px;
+  margin-bottom: 10px;
+  object-fit: cover;
+/*   border-radius: 50%; */
+  display: block;
+  box-shadow: 1px 3px 12px rgba(0, 0, 0, 0.18);
+}
+
+@media only screen and (min-width:320px) {
+  span img {
+      width: 95%;
+  }
+}
+
+.exitbtn {
+  margin-right: 10px;
+  border: 1px solid black;
+  background: #dd0f00;
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  transition: background .2s ease-in-out;
+}
+
+.exitbtn:hover {
+  background: #690606;
+  color: white;
+}

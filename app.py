@@ -52,7 +52,7 @@ def register():
     password = request.form['password']
     email = request.form['email']
     parselNo = request.form['parselNo']
-
+    bio = request.form["bio"]
     # Hash the password with bcrypt
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
@@ -62,7 +62,8 @@ def register():
         'password': hashed_password,
         'email': email,
         'parselNo': parselNo,
-        "_id": str(uuid.uuid4())
+        "_id": str(uuid.uuid4()),
+        "bio": bio
     })
 
     return render_template('register_index.html')
@@ -78,17 +79,20 @@ def get_session_user():
     return user
 
 @login_required
-@app.route('/profile/')
-@app.route('/profile', methods=["GET"])
-def profile():
-    user = get_session_user()
+@app.route('/profile/<string:user_id>', methods=["GET"])
+def profile(user_id):
+    user = get_user_from_id(user_id)
     return render_template('profile.html', user=user)
 
-@app.route('/sikayet', methods=["GET", "POST"])
-def compliment():
+@app.route('/sikayet/<string:comp_user_id>', methods=["GET", "POST"])
+def compliment(comp_user_id):
     user = get_session_user()
-    return render_template('compliment.html', user=user)
+    return render_template('compliment.html', user=user, sikayet=get_user_from_id(comp_user_id))
 
+def get_user_from_id(user_id):
+    return db.users.find_one({
+        "_id": user_id
+    })
 @app.route('/login', methods=['POST'])
 def login():
     # Get the user's information from the request
@@ -133,6 +137,7 @@ def guest():
 @app.route('/home')
 @app.route('/home/', methods=['GET', 'POST'])
 def index():
+    user = get_session_user()
     if request.method == 'POST':
         dosya = request.files['dosya']
         dosya_adi = dosya.filename
@@ -140,7 +145,7 @@ def index():
             dosya.save('webimgs/'+dosya_adi)
         else:
             return render_template('upload_error.html')
-    return render_template('index.html')
+    return render_template('index.html', user=user)
 
 @app.route('/parselSorgu/<float:enlem>/<float:boylam>', methods=["GET"])
 def parselSorgu(enlem, boylam):
