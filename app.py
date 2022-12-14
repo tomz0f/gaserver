@@ -51,8 +51,9 @@ def register():
     username = request.form['username']
     password = request.form['password']
     email = request.form['email']
+    adaNo = request.form['adaNo']
     parselNo = request.form['parselNo']
-    bio = request.form["bio"]
+    ilTercihi = request.form['ilTercihi']
     # Hash the password with bcrypt
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
@@ -61,9 +62,10 @@ def register():
         'username': username,
         'password': hashed_password,
         'email': email,
+        'adaNo': adaNo,
         'parselNo': parselNo,
         "_id": str(uuid.uuid4()),
-        "bio": bio
+        "il": ilTercihi
     })
 
     return render_template('register_index.html')
@@ -106,11 +108,40 @@ def get_session_user():
 @login_required
 @app.route('/profile/<string:user_id>', methods=["GET"])
 def profile(user_id):
+    if 'user_id' not in session:
+        return redirect('/ziyaretci')
     user = get_user_from_id(user_id)
+    return render_template('profile.html')
+
+@app.route('/profile', methods=["GET"])
+def profile_user():
+    if 'user_id' not in session:
+        return redirect('/ziyaretci')
+    user = get_session_user()
     return render_template('profile.html', user=user)
+
+@app.route('/profile/settings', methods=["GET"])
+def profile_settings():
+    if 'user_id' not in session:
+        return redirect('/ziyaretci')
+    user = get_session_user()
+
+    return render_template('profile_settings.html')
+
+@app.route('/profile/settings/update', methods=["POST"])
+def profile_update():
+    if 'user_id' not in session:
+        return redirect('/ziyaretci')
+
+    username = request.form['username']
+    password = request.form['password']
+    
+
 
 @app.route('/sikayet/<string:comp_user_id>', methods=["GET", "POST"])
 def complaintt(comp_user_id):
+    if 'user_id' not in session:
+        return redirect('/ziyaretci')
     user = get_session_user()
     return render_template('complaint.html', user=user, sikayet=get_user_from_id(comp_user_id))
 
@@ -200,12 +231,6 @@ def send_to_db(obj: dict) -> str:
         if response == None:
             raise ValueError("Database cannot get accessable or not good. :D")
 
-def get_db(link:str):
-    with pymongo.MongoClient(db_link) as client:
-        collection_db = client["galbul"]
-        db = collection_db.parsel
-
-        all_db = db.find({})
 @app.route('/logo.png')
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
