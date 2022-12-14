@@ -59,13 +59,15 @@ def register():
 
     # Add the user to the database
     db.users.insert_one({
-        'username': username,
-        'password': hashed_password,
-        'email': email,
-        'adaNo': adaNo,
-        'parselNo': parselNo,
-        "_id": str(uuid.uuid4()),
-        "il": ilTercihi
+        ######################################################
+        'username': username,                                #
+        'password': hashed_password,                         #
+        'email': email,                                      #
+        'adaNo': adaNo,                                      #
+        'parselNo': parselNo,                                #
+        "_id": str(uuid.uuid4()),                            #
+        "il": ilTercihi                                      #
+        ######################################################
     })
 
     return render_template('register_index.html')
@@ -111,14 +113,20 @@ def profile(user_id):
     if 'user_id' not in session:
         return redirect('/ziyaretci')
     user = get_user_from_id(user_id)
-    return render_template('profile.html')
+
+    if user_id == session['user_id']:
+        sameUser = True
+    else:
+        sameUser = False
+    print(sameUser)
+    return render_template('profile.html', user=user, sameUser=sameUser)
 
 @app.route('/profile', methods=["GET"])
 def profile_user():
     if 'user_id' not in session:
         return redirect('/ziyaretci')
     user = get_session_user()
-    return render_template('profile.html', user=user)
+    return render_template('profile.html', user=user, sameUser=True)
 
 @app.route('/profile/settings', methods=["GET"])
 def profile_settings():
@@ -126,17 +134,37 @@ def profile_settings():
         return redirect('/ziyaretci')
     user = get_session_user()
 
-    return render_template('profile_settings.html')
+    return render_template('profile_settings.html', user=user)
 
 @app.route('/profile/settings/update', methods=["POST"])
 def profile_update():
     if 'user_id' not in session:
         return redirect('/ziyaretci')
-
+    else:
+        user = get_session_user()
     username = request.form['username']
-    password = request.form['password']
-    
+    email = request.form['email']
+    adaNo = request.form['adaNo']
+    parselNo = request.form['parselNo']
+    ilTercihi = request.form['ilTercihi']
 
+    # encode password
+    password = request.form['password']
+
+    if user and bcrypt.checkpw(password.encode('utf-8'), user['password']):
+        update_dict = {
+            "$set": {
+                "username": username,
+                "email": email,
+                "adaNo": adaNo,
+                "parselNo": parselNo,
+                "ilTercihi": ilTercihi
+            }
+        }
+        db.users.update_one(user, update_dict)
+        return render_template('profile_settings_success.html')
+    else:
+        return render_template('profile_settings_error.html')
 
 @app.route('/sikayet/<string:comp_user_id>', methods=["GET", "POST"])
 def complaintt(comp_user_id):
@@ -152,11 +180,11 @@ def get_user_from_id(user_id):
 @app.route('/login', methods=['POST'])
 def login():
     # Get the user's information from the request
-    username = request.form['username']
+    email = request.form['email']
     password = request.form['password']
 
     # Retrieve the user from the database
-    user = db.users.find_one({'username': username})
+    user = db.users.find_one({'email': email})
 
     # Check that the user exists and the password is correct
     if user and bcrypt.checkpw(password.encode('utf-8'), user['password']):
@@ -190,9 +218,12 @@ def allowed_file(filename):
 def guest():
     return render_template('guest.html')
 
+@login_required
 @app.route('/home')
 @app.route('/home/', methods=['GET', 'POST'])
 def index():
+    if 'user_id' not in session:
+        return redirect('/ziyaretci')
     user = get_session_user()
     if request.method == 'POST':
         dosya = request.files['dosya']

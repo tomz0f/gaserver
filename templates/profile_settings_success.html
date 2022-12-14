@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giriş İşlemlerine Yönleniriliyorsunuz!</title>
+    <title>Hesap/Profil Bilgileriniz Güncellendi.</title>
     <link rel="icon" href="{{ url_for('static',filename='logo.png') }}">
+
 </head>
 <body>
 <script>
-    const url = '/'
-    window.location.href = url;
+    const url = '/home'
+    window.alert('Hesap/Profil Bilgileriniz Güncellendi.')
+    setTimeout(() => window.location.href = url, 1500)
 </script>
 </body>
 </html>

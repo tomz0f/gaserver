@@ -31,18 +31,22 @@
           </ul>
 
           <div class="content">
-            <pre>
-               {{user.il}}
-            </pre>
-
+               {{user.il}}/{{user.ilce}}
           </div>
         </div>
-        <div class="right__col">
+        <div class="right__col" style="justify-content: space-between;">
           <nav>
+            <div class="buttons">
+              <a href="/logout" class="logoutbtn">Çıkış Yap!</a>
+              {% if sameUser %}
+                <a href="/profile/settings">  <button>Profili Düzenle!</button> </a>
+              {% else %}
+                <a href="/sikayet/{{user._id}}">  <button>Şikayet Et!</button> </a>
+              {% endif %}
+            </div>
             <ul>
               <li><a href="">Gönderilenler</a></li>
             </ul>
-            <a href="/sikayet/{{user._id}}">  <button>Şikayet Et!</button> </a>
           </nav>
 
           <div class="photos">

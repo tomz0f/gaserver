@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Form </title>
+    <title>GalBul ~ Giriş Sayfası </title>
     <link rel="stylesheet" href="/static/css/loginsignupstyle.css">
     <link rel="icon" href="{{ url_for('static',filename='logo.png') }}">
 </head>
@@ -14,7 +14,7 @@
         <br>
         <form action="/login" method="POST">
             <div class="user-box">
-                <input type="text" name="username" placeholder="Kullanıcı Adı" required="">
+                <input type="email" name="email" placeholder="Kullanıcı E-mail" required="">
             </div>
             <div class="user-box">
                 <input type="password" name="password" placeholder="Şifre" required="">
