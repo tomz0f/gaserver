@@ -67,8 +67,9 @@ def register():
             'email': email,                                      #
             'adaNo': adaNo,                                      #
             'parselNo': parselNo,                                #
-            "_id": str(uuid.uuid4()),                            #
-            "il": ilTercihi                                      #
+            '_id': str(uuid.uuid4()),                            #
+            'il': ilTercihi,                                     #
+            'user_photos': []                                    #
             ######################################################
         })
     else:
@@ -118,7 +119,10 @@ def profile(user_id):
         return redirect('/ziyaretci')
     user = get_user_from_id(user_id)
 
-    if user_id == session['user_id']:
+    if user == None:
+        return render_template('404.html'), 404
+
+    elif user_id == session['user_id']:
         sameUser = True
     else:
         sameUser = False
@@ -232,8 +236,12 @@ def index():
     if request.method == 'POST':
         dosya = request.files['dosya']
         dosya_adi = dosya.filename
+        case_id = str(uuid.uuid4())
         if allowed_file(dosya_adi):
-            dosya.save('webimgs/'+dosya_adi)
+            dosya.save('webimgs/'+case_id+'.png')
+            db.users.update_one(user, {
+                "$push": { "user_photos": case_id }
+            })
         else:
             return render_template('upload_error.html')
     return render_template('index.html', user=user)
