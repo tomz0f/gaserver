@@ -229,9 +229,3 @@ img {
   justify-content: space;
   box-sizing: border-box;
 }
-
-.button:nth-child(1) {
-  display: relative;
-  left: 10px;
-  margin-left: 20px !important;
-}

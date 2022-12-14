@@ -25,9 +25,11 @@
             <span></span>
           </div>
           <h2>{{ user.username }}</h2>
+          <br>
           <p>{{ user.email }}</p>
 
           <ul class="about">
+          
           </ul>
 
           <div class="content">
@@ -35,18 +37,18 @@
           </div>
         </div>
         <div class="right__col" style="justify-content: space-between;">
-          <nav>
-            <div class="buttons">
-              <a href="/logout" class="logoutbtn">Çıkış Yap!</a>
-              {% if sameUser %}
-                <a href="/profile/settings">  <button>Profili Düzenle!</button> </a>
-              {% else %}
-                <a href="/sikayet/{{user._id}}">  <button>Şikayet Et!</button> </a>
-              {% endif %}
-            </div>
+          <nav style="display: flex !important; justify-content: space-between !important;">
             <ul>
               <li><a href="">Gönderilenler</a></li>
             </ul>
+            <ol>
+            {% if sameUser %}
+              <a href="/logout" class="logoutbtn">Çıkış Yap!</a>
+              <a href="/profile/settings">  <button>Profili Düzenle!</button> </a>
+            {% else %}
+              <a href="/sikayet/{{user._id}}">  <button>Şikayet Et!</button> </a>
+            {% endif %}
+            </ol>
           </nav>
 
           <div class="photos">
