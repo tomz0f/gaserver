@@ -58,17 +58,21 @@ def register():
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
     # Add the user to the database
-    db.users.insert_one({
-        ######################################################
-        'username': username,                                #
-        'password': hashed_password,                         #
-        'email': email,                                      #
-        'adaNo': adaNo,                                      #
-        'parselNo': parselNo,                                #
-        "_id": str(uuid.uuid4()),                            #
-        "il": ilTercihi                                      #
-        ######################################################
-    })
+    is_user_exist = db.users.find_one({"email": email})
+    if is_user_exist == None or is_user_exist == False:
+        db.users.insert_one({
+            ######################################################
+            'username': username,                                #
+            'password': hashed_password,                         #
+            'email': email,                                      #
+            'adaNo': adaNo,                                      #
+            'parselNo': parselNo,                                #
+            "_id": str(uuid.uuid4()),                            #
+            "il": ilTercihi                                      #
+            ######################################################
+        })
+    else:
+        return render_template('user_exist.html')
 
     return render_template('register_index.html')
 
