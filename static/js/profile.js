@@ -14,9 +14,6 @@ function createHex() {
    
    var gradient = "linear-gradient(" + deg + "deg, " + "#" + createHex() + ", " + "#" + createHex() +")";
    
-   document.getElementById("bg").style.background = gradient;
-   
-   console.log(hexCode1, hexCode2);
-  
+   document.getElementById("bg").style.background = gradient;  
  }
  document.onload = generate();
