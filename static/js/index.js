@@ -48,6 +48,5 @@ const getParsel = async function (location){
   let result = await fetch(`/parselSorgu/${location.coords.latitude}/${location.coords.longitude}`, {
     method: "GET",
   })
-  
   let parselData = await result.json();
 }

@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="{{ url_for('static',filename='logo.png') }}">
     <title>{{ user.username }} | GalBul</title>
+    <script src="/static/js/profile.js" defer></script>
     <!-- Font Awesome -->
     <link
       rel="stylesheet"
@@ -17,23 +18,26 @@
   </head>
   <body>
     <div class="header__wrapper">
-      <header></header>
+      <header style="z-index: 3 !important;" id="bg"></header>
       <div class="cols__container">
         <div class="left__col">
           <div class="img__container">
-            <img src="https://avatars.dicebear.com/api/micah/{{user._id}}.svg" alt="{{user.username}}" />
+            <img style="border-radius: 0%; z-index:2;" src="https://avatars.dicebear.com/api/micah/{{user._id}}.svg" alt="{{user.username}}" />
             <span></span>
           </div>
           <h2>{{ user.username }}</h2>
           <br>
-          <p>{{ user.email }}</p>
-
+          <p style="color: rgb(103, 194, 0)">{{ user.email }}</p>
           <ul class="about">
           
           </ul>
 
           <div class="content">
-               {{user.il}}/{{user.ilce}}
+            <b>
+              İl: {{user.il}}
+              <br>
+              İlçe: {{user.ilce}}
+            </b>
           </div>
         </div>
         <div class="right__col" style="justify-content: space-between;">

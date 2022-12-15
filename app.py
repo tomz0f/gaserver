@@ -73,6 +73,10 @@ def register():
             'user_photos': []                                    #
             ######################################################
         })
+        user = db.users.find_one({'email': email})
+        session['user_id'] = str(user['_id'])
+        return redirect('/home')
+        
     else:
         return render_template('user_exist.html')
 
@@ -91,7 +95,6 @@ def search():
     users = db.users.find({ 'name': { '$regex': query } })
 
     # Render the search results in a Jinja template
-    print(users)
     return render_template('search_results.html', users=users)
 
 @login_required
