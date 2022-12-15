@@ -17,10 +17,8 @@
     <form style="display: inline-block;" method="POST" class="navbar-brand" id="dosyaform" enctype="multipart/form-data">
       <input type="file" name="dosya" onchange="submit_form()">
     </form>
-    <form class="form-inline" action="search" method="GET" style="display: flex; align-items: center;">
-      <input name="query" id="query" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <input value="Profili Bul!" class="btn btn-outline-success my-2 my-sm-0" type="submit"/>
-    </form>
+    <input name="query" style="width:30%; margin-right: -2.5rem;" id="query" class="form-control mr-sm-2" type="text" placeholder="Çiftçi arkadaşlarını arat! :)" aria-label="Search">
+    <button id="search" class="btn btn-outline-success my-2 my-sm-0" onclick="search()">Profili Ara</button>
     
     
     <a href="/profile/{{user._id}}" style="margin-left: 5%;">

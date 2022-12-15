@@ -51,7 +51,7 @@ const getParsel = async function (location){
 }
 
 const search = () => {
-  let query = document.getElementB  yId("query").value;
+  let query = document.getElementById("query").value;
   if (query == "") {
     window.alert('Lütfen bir isim giriniz...')
   } else {
