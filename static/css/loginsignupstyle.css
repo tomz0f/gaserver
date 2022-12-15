@@ -81,6 +81,7 @@ body{
     overflow: hidden;
     transition: .5s;
     margin-top: 40px;
+    cursor: pointer;
     letter-spacing: 4px;
 }
 .login-box a:hover{
@@ -106,6 +107,7 @@ body{
     color: white;
     border: 0;
     font: 24px;
+    cursor: pointer;
 }
 .login-box a span{
     position: absolute;
