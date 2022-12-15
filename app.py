@@ -79,6 +79,22 @@ def register():
     return render_template('register_index.html')
 
 @login_required
+@app.route('/search', methods=['GET'])
+def search():
+    if 'user_id' not in session:
+        return redirect('/ziyaretci')
+
+    # Get the search query from the request
+    query = request.args.get('query')
+
+    # Search the database for users matching the query
+    users = db.users.find({ 'name': { '$regex': query } })
+
+    # Render the search results in a Jinja template
+    print(users)
+    return render_template('search_results.html', users=users)
+
+@login_required
 @app.route('/complaint', methods=["POST"])
 def sikayet():
     title = request.form['title']
@@ -230,6 +246,8 @@ def allowed_file(filename):
 @app.route('/ziyaretci')
 @app.route('/', methods = ["GET"])
 def guest():
+    if 'user_id' in session:
+        return redirect('/home')
     return render_template('guest.html')
 
 @login_required

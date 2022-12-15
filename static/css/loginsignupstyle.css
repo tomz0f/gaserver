@@ -74,7 +74,7 @@ body{
     position: relative;
     display: inline-block;
     padding: 10px 20px;
-    color: #2cff00;
+    color: #fff;
     font-size: 16px;
     text-decoration: none;
     text-transform: uppercase;
@@ -92,7 +92,15 @@ body{
                 0 0 50px #2cff00,
                 0 0 100px #2cff00;
 }
-
+.login-box a{
+    background: #2cff00;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #2cff00,
+                0 0 25px #2cff00,
+                0 0 50px #2cff00,
+                0 0 100px #2cff00;
+}
 .login-box a input {
     background-color: #2cff00;
     color: white;
