@@ -1,4 +1,3 @@
-let parselData;
 var setViewLatLng = new L.LatLng(38.329355001, 28.0694747494);
 var mymap = L.map('mapid').setView(setViewLatLng, 19)
 var latlng2 = new L.LatLng(38.329355001, 28.0694747494);
@@ -50,3 +49,13 @@ const getParsel = async function (location){
   })
   let parselData = await result.json();
 }
+
+const search = () => {
+  let query = document.getElementB  yId("query").value;
+  if (query == "") {
+    window.alert('Lütfen bir isim giriniz...')
+  } else {
+    query = query.replace(/%20/g, " ");
+    window.location.href = '/search?query='+query;
+  }
+};
