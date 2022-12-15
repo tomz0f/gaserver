@@ -52,12 +52,9 @@
           </nav>
 
           <div class="photos">
-            <img src="/static/img/img_1.avif" alt="Photo" />
-            <img src="/static/img/img_2.avif" alt="Photo" />
-            <img src="/static/img/img_3.avif" alt="Photo" />
-            <img src="/static/img/img_4.avif" alt="Photo" />
-            <img src="/static/img/img_5.avif" alt="Photo" />
-            <img src="/static/img/img_6.avif" alt="Photo" />
+            {% for photo in user.user_photos %}
+              <img src="/static/webimgs/{{photo}}.png" class="photo" alt="Riskli Gal Fotoğrafı" style="border: 1px solid black; border-radius: 10px; height: 15rem; width: 15rem;">
+            {% endfor %}
           </div>
         </div>
       </div>

@@ -1,3 +1,4 @@
+#bunu yazan tosun okuyana kosun :) -Furkan TÜRKOÜLU (Germencik,Aydın)
 import requests
 import os
 from flask import (
@@ -88,10 +89,15 @@ def sikayet():
     dosya = request.files['fileupload']
     dosya_adi = dosya.filename
     complaint_case = str(uuid.uuid4())
+    
     if allowed_file(dosya_adi):
-        dosya.save('webimgs/'+complaint_case+'.jpg')
+        dosya.save('./static/webimgs/'+complaint_case+'.jpg')
+        db.users.update_one(user, {
+            "$push": { "complaint_photos": complaint_case }
+        })
     else:
         return render_template('upload_error.html')
+    
     db.complaints.insert_one({
         "_id": complaint_case,
         "title": title,
@@ -238,7 +244,7 @@ def index():
         dosya_adi = dosya.filename
         case_id = str(uuid.uuid4())
         if allowed_file(dosya_adi):
-            dosya.save('webimgs/'+case_id+'.png')
+            dosya.save('./static/webimgs/'+case_id+'.png')
             db.users.update_one(user, {
                 "$push": { "user_photos": case_id }
             })
