@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="tr">
 <head>
   <script src="https://d3js.org/d3.v3.min.js"></script>
@@ -17,9 +18,9 @@
     <form style="display: inline-block;" method="POST" class="navbar-brand" id="dosyaform" enctype="multipart/form-data">
       <input type="file" name="dosya" onchange="submit_form()">
     </form>
-    <form class="form-inline" style="display: flex; align-items: center;">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Profili Bul!</button>
+    <form class="form-inline" action="search" method="GET" style="display: flex; align-items: center;">
+      <input name="query" id="query" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <input value="Profili Bul!" class="btn btn-outline-success my-2 my-sm-0" type="submit"/>
     </form>
     
     
