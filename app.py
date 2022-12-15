@@ -55,6 +55,7 @@ def register():
     adaNo = request.form['adaNo']
     parselNo = request.form['parselNo']
     ilTercihi = request.form['ilTercihi']
+    
     # Hash the password with bcrypt
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
