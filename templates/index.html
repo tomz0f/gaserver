@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="tr">
 <head>
   <script src="https://d3js.org/d3.v3.min.js"></script>
@@ -10,7 +9,6 @@
   <link rel="stylesheet" href="/static/css/index.css">
   <link rel="icon" href="{{ url_for('static',filename='logo.png') }}">
   <title>GalBul ~ Ana Sayfa</title>
-  <!--<script src="../static/js/parseldeneme.js"></script> salih ne alaka bu ister flasktan ayarla ister htmle url_for() koy olm  :D -->
 </head>
 <body>
 <nav class="navbar navbar-dark bg-light justify-content-between">
@@ -27,34 +25,78 @@
       </span>
     </a>
 </nav>
-<div id="mapid"style="border-radius: 5px; width: 100%;"></div>
-<script src="/static/js/index.js"></script>
+<div id="mapid"style="border-radius: 100px;height: 100%; width: 100%;"></div>
 <script>
-var form = document.querySelector('#dosyaform');
-mymap.locate({ setView: true , watch: true, maxZoom: 19,enableHighAccuracy: true});
-navigator.geolocation.getCurrentPosition(function(location, options = {
-  enableHighAccuracy: true,
-  timeout: 500,
-  maximumAge: 0
-}) {
-  let lat = location.coords.latitude;
-  let lng = location.coords.longitude;
-  let accuracy = location.coords.accuracy;
+function main() {
+  let parselData;
+  var setViewLatLng = new L.LatLng(38.329355001, 28.0694747494);
+  var mymap = L.map('mapid').setView(setViewLatLng, 19)
+  var latlng2 = new L.LatLng(38.329355001, 28.0694747494);
 
-  let blueIcon = new L.Icon({
-      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
+  //--------------------------------\
+  //  BUNLARI HAKEDECEK NE YAPTIM?  )>
+  //--------------------------------/
+
+  var parsel = L.polygon(
+    [
+      [28.06978000000, 38.32976000000].reverse(),
+      [28.06968000000, 38.33009000000000000].reverse(),
+      [28.06962000000, 38.33021000000000000].reverse(),
+      [28.06957000000, 38.33028000000000000].reverse(),
+      [28.06952000000, 38.33029000000000000].reverse(),
+      [28.06945000000, 38.33027000000000000].reverse(),
+      [28.06935000000, 38.33019000000000000].reverse(),
+      [28.06928000000, 38.3301000000000000].reverse(),
+      [28.06919000000, 38.32992000000000000].reverse(),
+      [28.06913000000, 38.32979000000000000].reverse(),
+      [28.06909000000, 38.32968000000000000].reverse(),
+      [28.06909000000, 38.32962000000000000].reverse(),
+      [28.06911000000, 38.32962000000000000].reverse(),
+      [28.06911000000, 38.32956000000000000].reverse(),
+      [28.06915000000, 38.3293000000000000].reverse(),
+      [28.06926000000, 38.32929000000000000].reverse(),
+      [28.06952000000, 38.32923000000000000].reverse(),
+      [28.06972000000, 38.3292000000000000].reverse(),
+      [28.06975000000, 38.32929000000000000].reverse(),
+      [28.06978000000, 38.32939000000000000].reverse(),
+      [28.06983000000, 38.32956000000000000].reverse(),
+      [28.06978000000, 38.32966000000000000].reverse(),
+      [28.06978000000, 38.3297600000000000].reverse()], {
+    color: 'red'
+
+  }).addTo(mymap);
+  let googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+    maxZoom: 20,
+    subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+  });
+  googleSat.addTo(mymap)
+
+  navigator.geolocation.getCurrentPosition(function (location, options = {
+    enableHighAccuracy: true,
+    timeout: 500,
+    maximumAge: 0
+  }) {
+
+    let redIcon = new L.Icon({
+      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
       shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
       iconSize: [25, 41],
       iconAnchor: [12, 41],
       popupAnchor: [1, -34],
       shadowSize: [41, 41]
-  });
-  let latLng = new L.LatLng(lat, lng);
-  L.marker(latLng, {icon: blueIcon}).bindPopup(`Şu anki konumun<br>Lat:${lat} Lng:${lng}`).addTo(mymap);
-});
+    });
 
-function submit_form(){
-  form.submit();
+    L.marker(latlng2, { icon: redIcon }).bindPopup("Riskli Gal Arısı, Nazilli/Aydın E: 37.8618 B: 27.2534").addTo(mymap);
+    getParsel(location)
+
+  });
+} main()
+
+const getParsel = async function (location) {
+  let result = await fetch(`/parselSorgu/${location.coords.latitude}/${location.coords.longitude}`, {
+    method: "GET",
+  })
+  let parselData = await result.json();
 }
 </script>
 </body>

@@ -307,6 +307,6 @@ def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
                           'logo.png',mimetype='image/png')
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080, debug=1)
+    app.run(host="0.0.0.0", port=8081, debug=1)
     #or flask run --host=0.0.0.0 --port=8080
     #or python3 app.py --host=0.0.0.0 --port=8080
