@@ -17,6 +17,9 @@ from werkzeug.utils import secure_filename
 from functools import wraps
 import bcrypt
 import pymongo
+
+#for fatih internet
+import certifi
 #################################
 ##### I'M WORTHLESS GUY :') #####
 #################################
@@ -35,7 +38,8 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 ERR_CODES = [400, 401, 403, 404, 500, 502, 503, 504]
 
 db_link = "mongodb+srv://yigit:yigitinsifresi@projectdatabasegalbul.ixx82u7.mongodb.net/test"
-client = pymongo.MongoClient(db_link)
+cacert = certifi.where()
+client = pymongo.MongoClient(db_link, tlsCAFile=cacert)
 db = client.galbul
 
 app = Flask(__name__, instance_relative_config=True)
@@ -294,7 +298,7 @@ def parselSorgu(enlem, boylam):
         })
 
 def send_to_db(obj: dict) -> str:
-    with pymongo.MongoClient(db_link) as client:
+    with pymongo.MongoClient(db_link, tlsCAFile=cacert) as client:
         collection_db = client["galbul"]
         db = collection_db.parsel
 
