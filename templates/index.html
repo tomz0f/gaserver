@@ -25,17 +25,16 @@
       </span>
     </a>
 </nav>
-<div id="mapid"style="border-radius: 100px;height: 100%; width: 100%;"></div>
+<div id="mapid"style="border-radius: 2.5px;height: 100%; width: 100%;"></div>
 <script>
 function main() {
+
+
   let parselData;
   var setViewLatLng = new L.LatLng(38.329355001, 28.0694747494);
   var mymap = L.map('mapid').setView(setViewLatLng, 19)
   var latlng2 = new L.LatLng(38.329355001, 28.0694747494);
 
-  //--------------------------------\
-  //  BUNLARI HAKEDECEK NE YAPTIM?  )>
-  //--------------------------------/
 
   var parsel = L.polygon(
     [
@@ -98,6 +97,12 @@ const getParsel = async function (location) {
   })
   let parselData = await result.json();
 }
+  function submit_form(){
+    let formm = document.querySelector("#dosyaform");
+    formm.submit();
+  }
+  
+
 </script>
 </body>
 </html>

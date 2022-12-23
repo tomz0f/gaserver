@@ -1,12 +1,24 @@
-import matplotlib.pyplot as plt
-import seaborn as sns
-import keras
-from keras.models import Sequential
-from keras.layers import Dense, Conv2D , MaxPool2D , Flatten , Dropout 
-from keras.preprocessing.image import ImageDataGenerator
-from keras.optimizers import Adam
-from sklearn.metrics import classification_report,confusion_matrix
+# Load TensorFlow Lite and trained model
+from sklearn.metrics import accuracy_score
 import tensorflow as tf
-import cv2
-import os
-import numpy as np
+
+test_images = 'gadata'
+interpreter = tf.lite.Interpreter(model_path="galarisi3.tflite")
+interpreter.allocate_tensors()
+
+input_tensor_index = interpreter.get_input_details()[0]["index"]
+output_tensor_index = interpreter.get_output_details()[0]["index"]
+
+# Preprocess test images
+test_images = [preprocess_image(image) for image in test_images]
+test_images = np.vstack(test_images)
+
+# Run model on test images
+interpreter.set_tensor(input_tensor_index, test_images)
+interpreter.invoke()
+predictions = interpreter.get_tensor(output_tensor_index)
+
+# Evaluate model performance
+
+accuracy = accuracy_score(test_labels, predictions)
+print(f"Model accuracy: {accuracy:.2f}")

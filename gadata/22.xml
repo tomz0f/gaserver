@@ -1,0 +1,26 @@
+<annotation>
+	<folder>gadata</folder>
+	<filename>22.jpeg</filename>
+	<path>/home/salih/gadata/22.jpeg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>500</width>
+		<height>328</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>galarisi</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>228</xmin>
+			<ymin>119</ymin>
+			<xmax>296</xmax>
+			<ymax>190</ymax>
+		</bndbox>
+	</object>
+</annotation>
