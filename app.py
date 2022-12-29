@@ -94,7 +94,7 @@ def search():
     if 'user_id' not in session:
         return redirect('/ziyaretci')
 
-    # Get the search query from the request
+    # Get the search query from the reques1t
     query = request.args.get('query')
 
     # Search the database for users matching the query
@@ -115,6 +115,7 @@ def sikayet():
     dosya_adi = dosya.filename
     complaint_case = str(uuid.uuid4())
     
+    user = get_session_user()
     if allowed_file(dosya_adi):
         dosya.save('./static/webimgs/'+complaint_case+'.jpg')
         db.users.update_one(user, {
