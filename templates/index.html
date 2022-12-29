@@ -27,6 +27,9 @@
 </nav>
 <div id="mapid"style="border-radius: 2.5px;height: 100%; width: 100%;"></div>
 <script>
+function koordinat(enlem, boylam) {
+  return new L.LatLng(enlem, boylam)
+}
 function main() {
 
 
@@ -86,6 +89,10 @@ function main() {
     });
 
     L.marker(latlng2, { icon: redIcon }).bindPopup("Riskli Gal Arısı, Nazilli/Aydın E: 37.8618 B: 27.2534").addTo(mymap);
+    L.marker(koordinat(38.3526662, 27.6821678), { icon: redIcon }).bindPopup("Riskli Gal Arısı, Nazilli/Aydın E: 37.8618 B: 27.2534").addTo(mymap);
+    L.marker(koordinat(38.3473424, 27.6853388), { icon: redIcon }).bindPopup("Riskli Gal Arısı, Nazilli/Aydın E: 37.8618 B: 27.2534").addTo(mymap);
+    L.marker(koordinat(38.3500182, 27.6866751), { icon: redIcon }).bindPopup("Riskli Gal Arısı, Nazilli/Aydın E: 37.8618 B: 27.2534").addTo(mymap);
+    L.marker(koordinat(38.3509533, 27.6856382), { icon: redIcon }).bindPopup("Riskli Gal Arısı, Nazilli/Aydın E: 37.8618 B: 27.2534").addTo(mymap);
     getParsel(location)
 
   });

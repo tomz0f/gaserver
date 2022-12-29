@@ -36,7 +36,6 @@ def login_required(f):
             flash("You need to login")
             return render_template('guest.html')
 
-
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 ERR_CODES = [400, 401, 403, 404, 500, 502, 503, 504]
 
@@ -265,8 +264,8 @@ def guest():
 @app.route('/home')
 @app.route('/home/', methods=['GET', 'POST'])
 def index():
-    if 'user_id' not in session:
-        return redirect('/ziyaretci')
+    # if 'user_id' not in session:
+    #     return redirect('/ziyaretci')
     user = get_session_user()
     if request.method == 'POST':
         dosya = request.files['dosya']

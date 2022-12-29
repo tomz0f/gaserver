@@ -11,7 +11,11 @@
 </head>
 <body style="background-color: rgb(255, 255, 255);">
    <div class="login-box">
-      <h2 >{{ project_name }}'ne Hoşgeldiniz!</h2>
+      {% if project_name.upper() == "GALBUL"%}
+        <h2>GalBul Sistemine Hoş geldiniz!</h2>
+      {% else %}
+        <h2>Gal Arısı Tespit Sistemi'ne Hoş geldiniz!</h2>
+      {% endif%}
       <br>
       <form action="/ziyaretci" method="POST" style="flex:1; align-items:center; justify-content:center;" id="kayitform">
           <div class="user-box">
