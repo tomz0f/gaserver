@@ -96,6 +96,9 @@ body{
 .login-box a{
     background: #2cff00;
     color: #fff;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-fill-color: white; /* Will override color (regardless of order) */
+    -webkit-text-stroke-color: black;
     border-radius: 5px;
     box-shadow: 0 0 5px #2cff00,
                 0 0 25px #2cff00,

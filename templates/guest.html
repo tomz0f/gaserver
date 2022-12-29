@@ -4,14 +4,14 @@
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>GalBul Sistemi</title>
+   <title>{{project_name}}</title>
    <link rel="icon" href="{{ url_for('static',filename='logo.png') }}">
    <link rel="stylesheet" href="/static/css/loginsignupstyle.css">
    <link rel="stylesheet" href="/static/css/guest.css">
 </head>
 <body style="background-color: rgb(255, 255, 255);">
    <div class="login-box">
-      <h2 >GalBul Sistemine Hoşgeldiniz!</h2>
+      <h2 >{{ project_name }}'ne Hoşgeldiniz!</h2>
       <br>
       <form action="/ziyaretci" method="POST" style="flex:1; align-items:center; justify-content:center;" id="kayitform">
           <div class="user-box">

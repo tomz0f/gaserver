@@ -1,3 +1,4 @@
+#!/bin/python3
 #bunu yazan tosun okuyana kosun :) -Furkan TÜRKOÜLU (Germencik,Aydın)
 import requests
 import os
@@ -23,6 +24,8 @@ import certifi
 #################################
 ##### I'M WORTHLESS GUY :') #####
 #################################
+
+project_name = "Gal Arısı Tespit Sistemi"
 
 def login_required(f):
     @wraps(f)
@@ -85,8 +88,6 @@ def register():
     else:
         return render_template('user_exist.html')
 
-    return render_template('register_index.html')
-
 @login_required
 @app.route('/search', methods=['GET'])
 def search():
@@ -100,7 +101,7 @@ def search():
     users = db.users.find({ 'name': { '$regex': query } })
 
     # Render the search results in a Jinja template
-    return render_template('search_results.html', users=users)
+    return render_template('search_results.html', users=users, project_name=project_name)
 
 @login_required
 @app.route('/complaint', methods=["POST"])
@@ -157,14 +158,14 @@ def profile(user_id):
     else:
         sameUser = False
     print(sameUser)
-    return render_template('profile.html', user=user, sameUser=sameUser)
+    return render_template('profile.html', user=user, sameUser=sameUser, project_name=project_name)
 
 @app.route('/profile', methods=["GET"])
 def profile_user():
     if 'user_id' not in session:
         return redirect('/ziyaretci')
     user = get_session_user()
-    return render_template('profile.html', user=user, sameUser=True)
+    return render_template('profile.html', user=user, sameUser=True, project_name=project_name)
 
 @app.route('/profile/settings', methods=["GET"])
 def profile_settings():
@@ -172,7 +173,7 @@ def profile_settings():
         return redirect('/ziyaretci')
     user = get_session_user()
 
-    return render_template('profile_settings.html', user=user)
+    return render_template('profile_settings.html', user=user, project_name=project_name)
 
 @app.route('/profile/settings/update', methods=["POST"])
 def profile_update():
@@ -209,12 +210,13 @@ def complaintt(comp_user_id):
     if 'user_id' not in session:
         return redirect('/ziyaretci')
     user = get_session_user()
-    return render_template('complaint.html', user=user, sikayet=get_user_from_id(comp_user_id))
+    return render_template('complaint.html', user=user, sikayet=get_user_from_id(comp_user_id), project_name=project_name)
 
 def get_user_from_id(user_id):
     return db.users.find_one({
         "_id": user_id
     })
+
 @app.route('/login', methods=['POST'])
 def login():
     # Get the user's information from the request
@@ -241,12 +243,12 @@ def logout():
 @app.route('/kayit', methods = ["GET"])
 def kayit():
     if request.method == "GET":
-        return render_template('signup.html')
+        return render_template('signup.html', project_name=project_name)
 
 @app.route('/giris', methods=["GET"])
 def giris():
     if request.method == "GET":
-        return render_template('login.html')
+        return render_template('login.html', project_name=project_name)
 
 def allowed_file(filename):
     return ('.' in filename) and (filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS)
@@ -256,7 +258,7 @@ def allowed_file(filename):
 def guest():
     if 'user_id' in session:
         return redirect('/home')
-    return render_template('guest.html')
+    return render_template('guest.html', project_name=project_name)
 
 @login_required
 @app.route('/home')
@@ -276,7 +278,7 @@ def index():
             })
         else:
             return render_template('upload_error.html')
-    return render_template('index.html', user=user)
+    return render_template('index.html', user=user, project_name=project_name)
 
 @app.route('/parselSorgu/<float:enlem>/<float:boylam>', methods=["GET"])
 def parselSorgu(enlem, boylam):
