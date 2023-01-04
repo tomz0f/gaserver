@@ -41,7 +41,7 @@ ERR_CODES = [400, 401, 403, 404, 500, 502, 503, 504]
 
 db_link = "mongodb+srv://yigit:yigitinsifresi@projectdatabasegalbul.ixx82u7.mongodb.net/test"
 cacert = certifi.where()
-client = pymongo.MongoClient(db_link, tlsCAFile=cacert)
+client = pymongo.MongoClient(db_link, tlsCAFile=cacert,tlsAllowInvalidCertificates=True)
 db = client.galbul
 
 app = Flask(__name__, instance_relative_config=True)
@@ -98,7 +98,7 @@ def search():
 
     # Search the database for users matching the query
     users = db.users.find({ 'name': { '$regex': query } })
-
+    
     # Render the search results in a Jinja template
     return render_template('search_results.html', users=users, project_name=project_name)
 
