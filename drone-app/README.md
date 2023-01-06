@@ -18,20 +18,15 @@ basic SDK implementation based on Ryze documentation at [Tello SDK Document](htt
 ├── tello-state.py          <-- Basic Tello's SDK sensor state
 └── tello-stream.py         <-- Basic Tello's SDK video stream
 ```
-
-## Youtube Channel
-Checkout my youtube channel [RobotAndCode](https://www.youtube.com/channel/UCQam-u9KZaMSelXoJDRrYJA?view_as=subscriber) for more exciting robot and code projects.
-
 ## Software Installation
-This section describe required packages and software for D450 project.
+This section describe required packages and software for EHEW project.
 
 ### Pre-requisite packages
 1. Python3
-2. PIP3
+2. PIP3 (python package installer)
 3. numpy
 4. matplotlib
-
-### OpenCV
+5. OpenCV
 
 ### Installation on Windows
 Below are the packages and software required to install OpenCV in Windows platform.

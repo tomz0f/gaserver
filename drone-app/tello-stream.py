@@ -3,7 +3,7 @@
 """
 @brief      This is program for stream video from Tello camera.
 @author     Murtadha Bazli Tukimat
-@date       17-Nov-2020
+@date       01-06-2023
 """
 
 import threading
