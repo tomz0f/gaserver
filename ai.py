@@ -1,3 +1,4 @@
+#!/bin/python3
 # Load TensorFlow Lite and trained model
 from sklearn.metrics import accuracy_score
 import tensorflow as tf

@@ -1,5 +1,5 @@
 #!/bin/python3
-#bunu yazan tosun okuyana kosun :) -Furkan TÜRKOÜLU (Germencik,Aydın)
+#bunu yazan tosun okuyana kosun :) -Furkan TÜRKOĞLU (Germencik,Aydın)
 import requests
 import os
 from flask import (
@@ -25,7 +25,7 @@ import certifi
 ##### I'M WORTHLESS GUY :') #####
 #################################
 
-project_name = "Gal Arısı Tespit Sistemi"
+project_name = "GalBul"
 
 def login_required(f):
     @wraps(f)
@@ -49,12 +49,10 @@ app = Flask(__name__, instance_relative_config=True)
 app.secret_key = 'yigitinsifresi'
 # overridden if this file exists in the instance folder
 app.config.from_pyfile('config.py', silent=True)
-# Set up a MongoDB client and database
 
-# Define the routes for registering, logging in, and logging out users
 @app.route('/register', methods=['POST'])
 def register():
-    # Get the user's information from the request
+    # Gönderilen isteğe bağlı kullanıcı parametrelerini eklemek.
     username = request.form['username']
     password = request.form['password']
     email = request.form['email']
@@ -62,10 +60,10 @@ def register():
     parselNo = request.form['parselNo']
     ilTercihi = request.form['ilTercihi']
     
-    # Hash the password with bcrypt
+    # Şifreyi hashleyip veritabanına eklemek için
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
-    # Add the user to the database
+    # Kullanıcı veritabanına ekleme kısmı
     is_user_exist = db.users.find_one({"email": email})
     if is_user_exist == None or is_user_exist == False:
         db.users.insert_one({
