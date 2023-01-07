@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 """
 @brief      This is program for stream sensor states from Tello.
 @author     Yiğit GÜMÜŞ
@@ -24,7 +23,7 @@ host_ip = "0.0.0.0"
 response_port = 8890
 
 """ Welcome note """
-print("\nTello Sensor States Program\n")
+print("\n === Tello Sensor States Program ===\n")
 
 
 class Tello:
