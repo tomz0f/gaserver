@@ -7,16 +7,14 @@
 """
 
 import threading
-import socket
 import cv2
 
 
-""" Welcome note """
-print("\nTello Video Stream Program\n")
-
-
-class Tello:
+class TelloStream:
     def __init__(self):
+        """ Welcome note """
+        print("\n===Tello Video Stream Program Initialize...===\n")
+
         self._running = True
         self.video = cv2.VideoCapture("udp://@0.0.0.0:11111")
 
@@ -25,7 +23,7 @@ class Tello:
         self.video.release()
         cv2.destroyAllWindows()
 
-    def recv(self):
+    def recv(self, countID):
         """ Handler for Tello states message """
         while self._running:
             try:
@@ -40,31 +38,32 @@ class Tello:
                     new_frame = cv2.resize(frame, (new_w, new_h))
 
                     # Display the resulting frame
-                    cv2.imshow('Tello', new_frame)
+                    cv2.imwrite('img', new_frame)
                 # Wait for display image frame
                 # cv2.waitKey(1) & 0xFF == ord('q'):
-                cv2.waitKey(1)
+                if cv2.waitKey(1) & 0xFF == ord('q'):
+                    self.terminate()
             except Exception as err:
                 print(err)
 
+if __name__ == "__main__":
+    """ Start new thread for receive Tello response message """
+    t = TelloStream()
+    recvThread = threading.Thread(target=t.recv)
+    recvThread.start()
 
-""" Start new thread for receive Tello response message """
-t = Tello()
-recvThread = threading.Thread(target=t.recv)
-recvThread.start()
+    while True:
+        try:
+            # Get input from CLI
+            msg = input("tello-strem> ")
 
-while True:
-    try:
-        # Get input from CLI
-        msg = input()
-
-        # Check for "end"
-        if msg == "bye":
+            # Check for "end"
+            if msg == "exit":
+                t.terminate()
+                recvThread.join()
+                print("\nGood Bye\n")
+                break
+        except KeyboardInterrupt:
             t.terminate()
             recvThread.join()
-            print("\nGood Bye\n")
             break
-    except KeyboardInterrupt:
-        t.terminate()
-        recvThread.join()
-        break
