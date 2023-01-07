@@ -1,5 +1,5 @@
-# PROJECT TELLO AI
-
+# GASERVER DRONE APP AUTOMATED MOVEMENT AND SCANNER!!!
+### @yigitoo & @salihburock
 ## Background
 This is Tello AI project from RobotAndCode youtube channel. It contains
 basic SDK implementation based on Ryze documentation at [Tello SDK Document](https://dl-cdn.ryzerobotics.com/downloads/Tello/Tello%20SDK%202.0%20User%20Guide.pdf).
