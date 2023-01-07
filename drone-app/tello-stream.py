@@ -2,7 +2,7 @@
 
 """
 @brief      This is program for stream video from Tello camera.
-@author     Murtadha Bazli Tukimat
+@author     Yiğit GÜMÜŞ
 @date       01-06-2023
 """
 
