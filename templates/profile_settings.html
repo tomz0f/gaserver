@@ -6,7 +6,7 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="icon" href="{{ url_for('static',filename='logo.png') }}">
    <link rel="stylesheet" href="/static/css/loginsignupstyle.css">
-   <title>{{user.username}}'ın ayarları | {{profile_name}}</title>
+   <title>{{user.username}}'ın ayarları | {{project_name}}</title>
 </head>
 <body>
     <div class="login-box">
@@ -14,14 +14,15 @@
         <br>
         <form action="/profile/settings/update" method="POST" id="kayitform" autocomplete="off">
             <div class="user-box">
-                <input type="text" placeholder="İsim Soyisim" name="username" required="">
+                <input type="text" placeholder="İsim Soyisim" name="username" required="" value="{{user.username}}">
             </div>
             <div class="user-box">
-                <input type="email" placeholder="E-mail" name="email" required="">
+                <input type="email" placeholder="E-mail" name="email" required="" value="{{user.email}}">
             </div>
             <div class="user-box" style="margin-bottom: 50px; width:100%;">
                 <label for="ilTercihi" style="padding-bottom: 20px; position: absolute; top:-20px; left:0px; color:rgb(0, 255, 34);">Yaşadığın İl: </label>
-                <select name="ilTercihi" id="ilTercihi" form="kayitform" style="color: white; background-color:rgb(0, 255, 34); border:1px solid black; border-radius: 50px; margin-bottom: 20px; position: absolute; left:100px; top:-10px; z-index: 2;">
+                <select name="ilTercihi" id="ilTercihi" form="kayitform" style="color: black; background-color:rgb(0, 255, 34); border:1px solid black; border-radius: 50px; margin-bottom: 20px; position: absolute; left:100px; top:-10px; z-index: 2;">
+                    <option value="{{user.il}}" selected hidden>{{user.il}}</option>
                     <option value="Adana" data-ekdeger="1">Adana</option>
                     <option value="Adıyaman" data-ekdeger="2">Adıyaman</option>
                     <option value="Afyonkarahisar " data-ekdeger="3">Afyonkarahisar</option>
@@ -106,13 +107,13 @@
                 </select>
             </div>
             <div class="user-box">
-                <input type="text" placeholder="Ada No" name="adaNo" required="">
+                <input type="text" placeholder="Ada No" name="adaNo" required="" value="{{user.adaNo}}">
             </div>
             <div class="user-box">
-                <input type="text" placeholder="Parsel No" name="parselNo" required="">
+                <input type="text" placeholder="Parsel No" name="parselNo" required="" value="{{user.parselNo}}">
             </div>
             <div class="user-box">
-                <input type="password" placeholder="Şifre" name="password" required="">
+                <input type="password" placeholder="Değişikleri onaylamak için şifrenizi girin!" name="password" required="">
             </div>
             <a href="#">
                 <span></span>
