@@ -20,7 +20,7 @@ from tellostream import TelloStream
 
 class TelloAutomation(object):
     def __init__(self):
-        print("===Yiğit GÜMÜŞ's Tello Drone Automation===")
+        print("===GASERVER's Tello Drone Automation===")
         self.drone = TelloCommand()
         self.sensors = TelloState()
         self.video_frame = TelloStream()
@@ -98,7 +98,7 @@ class TelloAutomation(object):
                 self.terminate()
         
     def recv(self):
-        "@brief: receive data from sensors"
+        "@brief: receive data from drone's sensors."
         for key, value in self.sensors.state.items():
             print(f"{key}: {value}")
 

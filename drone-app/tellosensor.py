@@ -23,7 +23,7 @@ class TelloState:
         response_port = 8890
 
         """ Welcome note """
-        print("\n === Tello Sensor States Program Initialize...===\n")
+        print("\n ===Tello Sensor States Program Initialize...===\n")
 
         self.state = {}
         self._running = True

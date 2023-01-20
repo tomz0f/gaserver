@@ -147,23 +147,29 @@ def profile(user_id):
     if 'user_id' not in session:
         return redirect('/ziyaretci')
     user = get_user_from_id(user_id)
-
     if user == None:
         return render_template('404.html'), 404
 
-    elif user_id == session['user_id']:
+    sameUser = isSameUser(user_id, user)
+
+    return render_template('profile.html', user=user, sameUser=sameUser, project_name=project_name)
+
+def isSameUser(user_id: str, user: dict) -> bool:
+    if user_id == session['user_id']:
         sameUser = True
     else:
         sameUser = False
-    print(sameUser)
-    return render_template('profile.html', user=user, sameUser=sameUser, project_name=project_name)
+    return sameUser
 
-@app.route('/profile', methods=["GET"])
+@login_required
+@app.route('/profile/', methods=["GET"])
 def profile_user():
     if 'user_id' not in session:
         return redirect('/ziyaretci')
     user = get_session_user()
-    return render_template('profile.html', user=user, sameUser=True, project_name=project_name)
+
+    return render_template("profile.html", user=user, sameUser=True, project_name=project_name)
+
 
 @app.route('/profile/settings', methods=["GET"])
 def profile_settings():

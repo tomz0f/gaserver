@@ -1,0 +1,127 @@
+{
+    "wp": [
+        {
+            "dist_cm": 817,
+            "dist_px": 159,
+            "angle_deg": 90
+        },
+        {
+            "dist_cm": 597,
+            "dist_px": 116,
+            "angle_deg": 86
+        },
+        {
+            "dist_cm": 133,
+            "dist_px": 26,
+            "angle_deg": 84
+        },
+        {
+            "dist_cm": 133,
+            "dist_px": 25,
+            "angle_deg": 60
+        },
+        {
+            "dist_cm": 62,
+            "dist_px": 12,
+            "angle_deg": 86
+        },
+        {
+            "dist_cm": 71,
+            "dist_px": 13,
+            "angle_deg": 5
+        },
+        {
+            "dist_cm": 128,
+            "dist_px": 25,
+            "angle_deg": 91
+        },
+        {
+            "dist_cm": 69,
+            "dist_px": 13,
+            "angle_deg": 134
+        },
+        {
+            "dist_cm": 62,
+            "dist_px": 12,
+            "angle_deg": 107
+        },
+        {
+            "dist_cm": 48,
+            "dist_px": 9,
+            "angle_deg": 2
+        },
+        {
+            "dist_cm": 566,
+            "dist_px": 110,
+            "angle_deg": 53
+        },
+        {
+            "dist_cm": 843,
+            "dist_px": 164,
+            "angle_deg": 86
+        },
+        {
+            "dist_cm": 761,
+            "dist_px": 148,
+            "angle_deg": 24
+        }
+    ],
+    "pos": [
+        [
+            44,
+            283
+        ],
+        [
+            203,
+            284
+        ],
+        [
+            197,
+            168
+        ],
+        [
+            223,
+            169
+        ],
+        [
+            211,
+            146
+        ],
+        [
+            222,
+            141
+        ],
+        [
+            210,
+            148
+        ],
+        [
+            222,
+            170
+        ],
+        [
+            218,
+            183
+        ],
+        [
+            228,
+            190
+        ],
+        [
+            220,
+            185
+        ],
+        [
+            228,
+            295
+        ],
+        [
+            64,
+            297
+        ],
+        [
+            198,
+            234
+        ]
+    ]
+}
