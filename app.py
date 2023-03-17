@@ -13,12 +13,14 @@ from flask import (
     jsonify,
     send_from_directory
 )
+
 import uuid
 from werkzeug.utils import secure_filename
 from functools import wraps
 import bcrypt
 import pymongo
-
+import webview
+import threading
 #for fatih internet
 import certifi
 #################################
@@ -28,7 +30,7 @@ import certifi
 project_name = "GalBul"
 
 context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-context.load_cert_chain('certificate.crt', 'private.key')
+context.load_cert_chain('./certificates/certificate.crt', './certificates/private.key')
 
 def login_required(f):
     @wraps(f)
@@ -319,8 +321,13 @@ def send_to_db(obj: dict) -> str:
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
                           'logo.png',mimetype='image/png')
+
+
 if __name__ == "__main__":
-    context = ('certificate.crt', 'private.key')
-    app.run(host="0.0.0.0", port=8081, debug=1, ssl_context=context)
+    
+    
+    webview.create_window('GaServer | Desktop Client', app)
+    webview.start()
+
     #or flask run --host=0.0.0.0 --port=8080
     #or python3 app.py --host=0.0.0.0 --port=8080
