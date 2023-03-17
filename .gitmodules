@@ -1,0 +1,4 @@
+[submodule "gaserver-datas-and-models"]
+	path = gaserver-datas-and-models
+	url = https://github.com/yigitoo/gaserver-datas-and-models.git
+	

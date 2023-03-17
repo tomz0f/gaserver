@@ -1,5 +1,5 @@
 #!/bin/python3
-#bunu yazan tosun okuyana kosun :) -Furkan TÜRKOĞLU (Germencik,Aydın)
+import ssl
 import requests
 import os
 from flask import (
@@ -26,6 +26,9 @@ import certifi
 #################################
 
 project_name = "GalBul"
+
+context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+context.load_cert_chain('certificate.crt', 'private.key')
 
 def login_required(f):
     @wraps(f)
@@ -317,6 +320,7 @@ def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
                           'logo.png',mimetype='image/png')
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8081, debug=1)
+    context = ('certificate.crt', 'private.key')
+    app.run(host="0.0.0.0", port=8081, debug=1, ssl_context=context)
     #or flask run --host=0.0.0.0 --port=8080
     #or python3 app.py --host=0.0.0.0 --port=8080
