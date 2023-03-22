@@ -1,7 +1,7 @@
 {
   "name": "gadesktop-admin",
   "version": "0.0.1",
-  "description": "The boilerplate code to get started creating Cross-platform Desktop Apps with Electron and Svelte as front-end technology.",
+  "description": "GaServer's Admin Panel written in Svelte+Express+Electron.",
   "private": false,
   "license": "MIT",
   "main": "main.js",
@@ -12,6 +12,7 @@
     "files": [
       "public/**/*",
       "main.js",
+      "src/**/*",
       "preload.js"
     ],
     "win": {},
@@ -21,24 +22,30 @@
   "scripts": {
     "build": "rollup -c --bundleConfigAsCjs",
     "dev": "rollup -c -w --bundleConfigAsCjs",
+    "server": "node ./src/api.js",
     "start": "sirv public --no-clear",
     "electron": "wait-on http://localhost:8080 && electron .",
-    "electron-dev": "concurrently \"yarn run dev\" \"yarn run electron\"",
+    "electron-dev": "concurrently \"npm run server\" \"npm run dev\" \"npm run electron\"",
     "preelectron-pack": "yarn run build",
     "electron-pack": "electron-builder"
   },
   "dependencies": {
     "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
     "electron-serve": "^1.1.0",
     "express": "^4.18.2",
     "mongodb": "^5.1.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^23.0.2",
+    "@rollup/plugin-json": "^6.0.0",
     "@rollup/plugin-node-resolve": "^15.0.1",
+    "@rollup/plugin-replace": "^5.0.2",
     "concurrently": "^7.5.0",
+    "dotenv": "^16.0.3",
     "electron": "^21.2.0",
     "electron-builder": "^23.6.0",
+    "nodemon": "^2.0.21",
     "rollup": "^3.2.3",
     "rollup-plugin-css-only": "^4.2.0",
     "rollup-plugin-livereload": "^2.0.5",

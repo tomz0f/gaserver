@@ -3,8 +3,8 @@ const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const serve = require('electron-serve');
 const loadURL = serve({ directory: 'public' });
-
 // Keep a global reference of the window object, if you don't, the window will
+
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
@@ -13,11 +13,14 @@ function isDev() {
     return !app.isPackaged;
 }
 
-function createWindow() {    
+function createWindow() {
     // Create the browser window.
     mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
+        autoHideMenuBar: true,
+        useContentSize:  true,
+        resizable: false,
         webPreferences: {
             nodeIntegration: true,
             preload: path.join(__dirname, 'preload.js'),
@@ -35,7 +38,7 @@ function createWindow() {
     } else {
         loadURL(mainWindow);
     }
-    
+
     // Uncomment the following line of code when app is ready to be packaged.
     // loadURL(mainWindow);
 
