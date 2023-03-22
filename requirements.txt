@@ -4,3 +4,4 @@ bcrypt
 requests
 pyopenssl
 pywebview
+python-dotenv

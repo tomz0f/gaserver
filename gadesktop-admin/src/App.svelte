@@ -1,15 +1,16 @@
 <script>
 	import { isLogged, load_page_index } from './get_stores'
-	import { is_logged, page_index } from './stores';
+	import { is_logged, page_index, user_data } from './stores';
 	import './static/loginstyle.css';
 
 	let user = "GUEST";
 	let email;
 	let secretKey;
 
-	function submit_form()
+	async function submit_form()
 	{
-		const data = fetch(`http://localhost:${EXPRESS_PORT}/login`, {
+		// EXPRESS_PORT IS DEFINED IN rollup.config.js
+		const data = await fetch(`http://localhost:${EXPRESS_PORT}/login`, {
 			method: "POST",
 			body: JSON.stringify({
 				email: email,
@@ -17,23 +18,26 @@
 			}),
 			headers: {
 				"Content-Type": "application/json",
-				'Access-Control-Allow-Headers':
-					'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
 				'Access-Control-Allow-Methods': 'OPTIONS,POST',
 				'Access-Control-Allow-Credentials': true,
 				'Access-Control-Allow-Origin': '*',
 				'X-Requested-With': '*',
 			}
-		}).then(data => data.json())
-		  .then(response => console.log("Success:", response))
-		  .catch(err => console.error(err))
+		})
+		const result = await data.json()
 
+		if (result.response === 200)
+		{
+			// set stores!
+			user_data.set(result.user_data);
+			is_logged.set(true)
+			page_index.set(1)
 
-		let user = data.username;
-		is_logged.set(true)
-		page_index.set(1)
-		window.alert('Giris Basarili')
-		window.alert(user)
+			window.alert(`Hoşgeldiniz, ${result.user_data.username}!\nSisteme erişim veriliyor...`)
+		} else if(result.response === 403){
+			window.alert('ADMIN OLMADIĞINIZ HALDE SİSTEME ERİŞİM\nSAĞLAMAYA ÇALIŞMAKTAN DOLAYI BANLANIYORSUNUZ.')
+			setTimeout(() => window.close(), 2000)
+		}
 	}
 	$: logged = isLogged();
 	$: ui = load_page_index()

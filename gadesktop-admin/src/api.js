@@ -3,58 +3,66 @@ const bodyParser = require('body-parser');
 const { is_logged } = require('./stores');
 const cors = require('cors');
 const { Database } = require('./database');
+
 require('dotenv').config();
+const PORT = process.env.EXPRESS_PORT;
+const db_url = process.env.DB_URI;
 
-const PORT = 4455;
-const db_url = "mongodb+srv://yigit:yigitinsifresi@projectdatabasegalbul.ixx82u7.mongodb.net/test";
 const db_name = "galbul";
-const user_collection = "users";
-const ban_collection = "banned_emails";
+const user_collection_name = "users";
+const ban_collection_name = "banned_emails";
 
-const database = new Database(db_url, db_name, user_collection);
+const user_client = new Database(db_url, db_name, user_collection_name)
+const ban_client = new Database(db_url, db_name, ban_collection_name)
+const admin_client = new Database(db_url, db_name, process.env.ADMIN_DB_COLLECTION)
+
+// const database = new Database(db_url, db_name, user_collection);
+// await database.client.connect();
+
+
 const app = express();
 app.use(cors())
 app.use(bodyParser.json());
 
 app.get('/logout', function (req, res) {
   is_logged.set(false)
-  res.send({
+
+  res.status(200).json({
     message: "LOGOUT_SUCCESS",
     response: 200
   })
 })
 
-app.post('/login', function (req, res) {
+app.post('/login', async function (req, res) {
   const { email, password } = req.body;
-  const user = database.getUser({email: email});
+  const user = await user_client.run({email: email}, "find");
 
-  if(user.type === "normal" && user.secretKey === password)
+  let admin = await admin_client.run({}, 'find');
+  if(user.type === "normal" && password === admin.secretKey)
   {
-    database.delete_user({
+    user_client.deleteOne({
       "email": user.email
-    })
+    }, "delete")
 
-    database.change_collection(ban_collection)
-    database.create_banned_account({
+    ban_client.run({
       "email": user.email
-    })
-
-    database.change_collection(user_collection)
-    return res.send({
+    }, "insert")
+    
+    return res.status(403).json({
       message: "BANNING_THIS_USER_PERMENANTLY_FOR_HACKING_CRIME",
       response: 403,
       user: null
     })
-  } else if (user.type === "admin" && user.secretKey === password) {
+  } else if (user.type === "admin" && password === admin.secretKey) {
       isLogged.set(true)
 
-      return res.send({
+      return res.status(200).json({
         message: "AUTHORIZED",
         response: 200,
-        user: user.username
+        user_data: user
       });
   } else {
-    res.send({
+    res.status(500).json({
       message: "LOGIN_FAILURE",
       response: 500,
     })
@@ -62,5 +70,3 @@ app.post('/login', function (req, res) {
 });
 
 app.listen(PORT, () => console.log(`[SERVER] AT http://localhost:${PORT}/`))
-
-module.exports = { database, app };

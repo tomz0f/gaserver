@@ -13,7 +13,7 @@ from flask import (
     jsonify,
     send_from_directory
 )
-
+import time
 import uuid
 from werkzeug.utils import secure_filename
 from functools import wraps
@@ -55,6 +55,13 @@ app.secret_key = 'yigitinsifresi'
 # overridden if this file exists in the instance folder
 app.config.from_pyfile('config.py', silent=True)
 
+@app.route('/banned', methods=["GET"])
+def banned():
+    flash('You are banned')
+    time.sleep(2)
+    return redirect('/register')
+
+
 @app.route('/register', methods=['POST'])
 def register():
     # Gönderilen isteğe bağlı kullanıcı parametrelerini eklemek.
@@ -70,7 +77,11 @@ def register():
 
     # Kullanıcı veritabanına ekleme kısmı
     is_user_exist = db.users.find_one({"email": email})
-    if is_user_exist == None or is_user_exist == False:
+    is_user_banned = db.banned_emails.find_one({"email": email})
+    not_exist_situtations = [None, False]
+    if is_user_banned:
+        return redirect('/banned')
+    if (is_user_exist in not_exist_situtations):
         db.users.insert_one({
             ######################################################
             'username': username,                                #
