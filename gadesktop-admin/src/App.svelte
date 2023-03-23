@@ -1,46 +1,33 @@
 <script>
 	import { isLogged, load_page_index } from './get_stores'
 	import { is_logged, page_index, user_data } from './stores';
+	import { submit_form, get_complaints } from './api';
 	import './static/loginstyle.css';
 
-	let user = "GUEST";
+	let username = "GUEST";
 	let email;
 	let secretKey;
 
-	async function submit_form()
+	// for frotend
+	let zero_to_n = [];
+	let br_limit = 12
+	for(let i = 0; i <= br_limit; i++)
 	{
-		// EXPRESS_PORT IS DEFINED IN rollup.config.js
-		const data = await fetch(`http://localhost:${EXPRESS_PORT}/login`, {
-			method: "POST",
-			body: JSON.stringify({
-				email: email,
-				password: secretKey
-			}),
-			headers: {
-				"Content-Type": "application/json",
-				'Access-Control-Allow-Methods': 'OPTIONS,POST',
-				'Access-Control-Allow-Credentials': true,
-				'Access-Control-Allow-Origin': '*',
-				'X-Requested-With': '*',
-			}
-		})
-		const result = await data.json()
-
-		if (result.response === 200)
-		{
-			// set stores!
-			user_data.set(result.user_data);
-			is_logged.set(true)
-			page_index.set(1)
-
-			window.alert(`Hoşgeldiniz, ${result.user_data.username}!\nSisteme erişim veriliyor...`)
-		} else if(result.response === 403){
-			window.alert('ADMIN OLMADIĞINIZ HALDE SİSTEME ERİŞİM\nSAĞLAMAYA ÇALIŞMAKTAN DOLAYI BANLANIYORSUNUZ.')
-			setTimeout(() => window.close(), 2000)
-		}
+		zero_to_n.push(i)
 	}
-	$: logged = isLogged();
-	$: ui = load_page_index()
+
+	const send_form = () => submit_form(email, secretKey);
+	const get_compt = () => get_complaints(email, secretKey);
+
+	// reactives
+	let logged_reactive_component = isLogged();
+	let logged = true;
+	// let logged = logged_reactive_component ?? false;
+
+	let ui_reactive_component = load_page_index();
+	let ui = 1;
+	//let ui = ui_reactive_component ?? 0;
+
 	let title_list = ["Ana Sayfa", "Giriş Sayfası", "Admin Panel"];
 	$: title_reactive = title_list[ui]
 </script>
@@ -51,8 +38,8 @@
 <main>
     <div class="login-box">
         <h2>Admin Panel Giriş Formu</h2>
-        <br>
-        <form on:submit|preventDefault={submit_form} method="POST" name="loginform" onsubmit="return false" autocomplete="off">
+        <br/>
+        <form on:submit|preventDefault={send_form} method="POST" name="loginform" autocomplete="off">
             <div class="user-box">
                 <input bind:value={email} type="email" name="email" placeholder="Kullanıcı E-mail" required="">
             </div>
@@ -74,12 +61,17 @@
 <main>
 	<center>
 		<h1>
-			<u>Şikayet Değerlendirme:</u>
+			<u class="text-white my-2" style="color: white;">Şikayet Değerlendirme:</u>
 		</h1>
 	</center>
 </main>
 {:else}
-<center>404 Error: Page Not Found!</center>
+{#each zero_to_n as i}
+	<br/>
+{/each}
+<center style="font-size: 3rem; display:flex; justify-content:center; align-items:center; color:white;">
+	404 Hatası: Sayfa Bulunamadı!
+</center>
 {/if}
 
 <style>
