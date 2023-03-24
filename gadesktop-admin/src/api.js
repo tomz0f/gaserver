@@ -1,13 +1,18 @@
-const express = require('express');
+import express from 'express'
+import cors from 'cors'
+import bodyParser from 'body-parser';
+import { Database } from './database.js'
+import { is_logged } from './stores.js'
+
+/* const express = require('express');
 const bodyParser = require('body-parser');
 const { is_logged } = require('./stores');
 const cors = require('cors');
-const { Database } = require('./database');
+const { Database } = require('./database'); */
 
-require('dotenv').config();
-const PORT = process.env.EXPRESS_PORT;
-const db_url = process.env.DB_URI;
-
+const PORT = 4455;
+const db_url = "mongodb+srv://yigit:yigitinsifresi@projectdatabasegalbul.ixx82u7.mongodb.net/test";
+console.log(db_url)
 const db_name = "galbul";
 const user_collection_name = "users";
 const ban_collection_name = "banned_emails";
@@ -16,7 +21,7 @@ const complaints_collection = "complaints"
 const user_client = new Database(db_url, db_name, user_collection_name)
 const ban_client = new Database(db_url, db_name, ban_collection_name)
 const complaints_client = new Database(db_url, db_name, complaints_collection)
-const admin_client = new Database(db_url, db_name, process.env.ADMIN_DB_COLLECTION)
+const admin_client = new Database(db_url, db_name, "admin_token")
 
 // const database = new Database(db_url, db_name, user_collection);
 // await database.client.connect();
@@ -34,14 +39,49 @@ app.get('/logout', function (req, res) {
     response: 200
   })
 })
+
 app.post('/complaints', async function(req ,res) {
   const { email, secretKey } = req.body;
-})
-app.post('/login', async function (req, res) {
-  const { email, password: secretKey } = req.body;
-  const user = await user_client.run({email: email}, "find");
+  const user = await user_client.run({email: email}, "find_one")
+  let admin = await admin_client.run({}, "find_one");
+  let complaints=[];
 
-  let admin = await admin_client.run({}, 'find');
+  if(user.type === "normal" && secretKey === admin.secretKey)
+  {
+    user_client.deleteOne({
+      "email": user.email
+    }, "delete")
+
+    ban_client.run({
+      "email": user.email
+    }, "insert")
+
+    return res.status(403).json({
+      message: "BANNING_THIS_USER_PERMENANTLY_FOR_HACKING_CRIME",
+      response: 403,
+      user: null
+    })
+  } else if (user.type === "admin" && secretKey === admin.secretKey) {
+      complaints = await complaints_client.run({}, 'find');
+      console.log(complaints);
+      return res.status(200).json({
+        message: "REQUEST_SUCCESSFUL",
+        response: 200,
+        data: complaints
+      })
+  } else {
+    res.status(500).json({
+      message: "LOGIN_FAILURE",
+      response: 500,
+    })
+  }
+});
+
+app.post('/login', async function (req, res) {
+  const { email, secretKey } = req.body;
+  const user = await user_client.run({email: email}, "find_one");
+
+  let admin = await admin_client.run({}, 'find_one');
 
   if(user.type === "normal" && secretKey === admin.secretKey)
   {
@@ -82,7 +122,7 @@ async function submit_form(email, secretKey)
     method: "POST",
     body: JSON.stringify({
       email: email,
-      password: secretKey
+      secretKey: secretKey
     }),
     headers: {
       "Content-Type": "application/json",
@@ -133,7 +173,9 @@ async function get_complaints(email, secretKey)
 
   if (result.response === 200)
   {
-    return result.data;
+    return result.data
+  } else {
+    return "ERROR_CANNOT_GET_COMPLAINTS";
   }
 }
 export { submit_form, get_complaints };

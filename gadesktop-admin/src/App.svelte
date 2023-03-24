@@ -7,6 +7,7 @@
 	let username = "GUEST";
 	let email;
 	let secretKey;
+	let complaints = [];
 
 	// for frotend
 	let zero_to_n = [];
@@ -16,8 +17,10 @@
 		zero_to_n.push(i)
 	}
 
-	const send_form = () => submit_form(email, secretKey);
-	const get_compt = () => get_complaints(email, secretKey);
+	const send_form = () => {
+		submit_form(email, secretKey);
+		complaints = get_complaints(email, secretKey)
+	}
 
 	// reactives
 	let logged_reactive_component = isLogged();

@@ -1,6 +1,7 @@
 {
   "name": "gadesktop-admin",
   "version": "0.0.1",
+  "type": "module",
   "description": "GaServer's Admin Panel written in Svelte+Express+Electron.",
   "private": false,
   "license": "MIT",
