@@ -1,27 +1,24 @@
-import express from 'express'
-import cors from 'cors'
+import express from 'express';
 import bodyParser from 'body-parser';
-import { Database } from './database.js'
-import { is_logged } from './stores.js'
+import { Database } from './database.mjs'
+import { is_logged } from './stores.mjs'
+import cors from 'cors'
+import dotenv from 'dotenv'
 
-/* const express = require('express');
-const bodyParser = require('body-parser');
-const { is_logged } = require('./stores');
-const cors = require('cors');
-const { Database } = require('./database'); */
+dotenv.config();
+const PORT = process.env.EXPRESS_PORT;
+const db_url = process.env.DB_URI ?? "mongodb://localhost:27017/";
 
-const PORT = 4455;
-const db_url = "mongodb+srv://yigit:yigitinsifresi@projectdatabasegalbul.ixx82u7.mongodb.net/test";
-console.log(db_url)
 const db_name = "galbul";
 const user_collection_name = "users";
 const ban_collection_name = "banned_emails";
 const complaints_collection = "complaints"
+const admin_collection = process.env.ADMIN_DB_COLLECTION ?? "admin_token"
 
 const user_client = new Database(db_url, db_name, user_collection_name)
 const ban_client = new Database(db_url, db_name, ban_collection_name)
 const complaints_client = new Database(db_url, db_name, complaints_collection)
-const admin_client = new Database(db_url, db_name, "admin_token")
+const admin_client = new Database(db_url, db_name, admin_collection)
 
 // const database = new Database(db_url, db_name, user_collection);
 // await database.client.connect();
@@ -77,6 +74,25 @@ app.post('/complaints', async function(req ,res) {
   }
 });
 
+app.post('/complaint_case', async (req, res) => {
+  const comp_img_path = process.env.COMPLAINTS_IMG_PATH;
+  const { comp_id } = req.body;
+
+  const complaint_case = await complaints_client.run({_id: comp_id}, 'find_one') ?? false;
+  let comp_user;
+  let complainant;
+  
+  if (complaint_case)
+  {
+    comp_user = await user_client.run({_id: complaint_case.comp_user}, 'find_one')
+    complainant = await user_client.run({_id: complaint_case.complainant}, 'find_one')
+  }
+
+  return res.status(200).json({
+    
+  })
+})
+
 app.post('/login', async function (req, res) {
   const { email, secretKey } = req.body;
   const user = await user_client.run({email: email}, "find_one");
@@ -113,69 +129,3 @@ app.post('/login', async function (req, res) {
 });
 
 app.listen(PORT, () => console.log(`[SERVER] AT http://localhost:${PORT}/`))
-
-// db interactions for frontend | it's not for api actually i use that section for src/App.svelte!
-async function submit_form(email, secretKey)
-{
-  // EXPRESS_PORT IS DEFINED IN rollup.config.js
-  const data = await fetch(`http://localhost:${PORT}/login`, {
-    method: "POST",
-    body: JSON.stringify({
-      email: email,
-      secretKey: secretKey
-    }),
-    headers: {
-      "Content-Type": "application/json",
-      'Access-Control-Allow-Methods': 'OPTIONS,POST',
-      'Access-Control-Allow-Credentials': true,
-      'Access-Control-Allow-Origin': '*',
-      'X-Requested-With': '*',
-    }
-  })
-  const result = await data.json()
-
-  if (result.response === 200)
-  {
-    // set stores!
-    user_data.set(result.user_data);
-    is_logged.set(true)
-    page_index.set(1)
-    // set variables
-    username = result.user_data.username;
-    logged = true;
-    ui = 1;
-    window.alert(`Hoşgeldiniz, ${username}!\nSisteme erişim veriliyor...`)
-  } else if(result.response === 403){
-    window.alert('ADMIN OLMADIĞINIZ HALDE SİSTEME ERİŞİM\nSAĞLAMAYA ÇALIŞTIĞINIZDAN BANLANIYORSUNUZ.')
-    setTimeout(() => window.close(), 2000)
-  }
-}
-
-async function get_complaints(email, secretKey)
-{
- // EXPRESS_PORT IS DEFINED IN rollup.config.js
- const data = await fetch(`http://localhost:${PORT}/login`, {
-    method: "POST",
-    body: JSON.stringify({
-      email: email,
-      secretKey: secretKey
-    }),
-    headers: {
-      "Content-Type": "application/json",
-      'Access-Control-Allow-Methods': 'OPTIONS,POST',
-      'Access-Control-Allow-Credentials': true,
-      'Access-Control-Allow-Origin': '*',
-      'X-Requested-With': '*',
-    }
-  });
-
-  const result = await data.json();
-
-  if (result.response === 200)
-  {
-    return result.data
-  } else {
-    return "ERROR_CANNOT_GET_COMPLAINTS";
-  }
-}
-export { submit_form, get_complaints };

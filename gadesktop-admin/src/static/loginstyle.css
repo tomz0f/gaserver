@@ -205,3 +205,38 @@ body{
 ::placeholder { /* Most modern browsers support this now. */
    color: #2cff00;
 }
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+    height: auto;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    box-shadow: inset 0 0 5px grey;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgb(20, 236, 0);
+    border: 1px solid transparent;
+    border-radius: 5%;
+    background-image: linear-gradient(180deg, #157215 0%, #00ff40 99%);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(49, 177, 76);
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Old versions of Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+}

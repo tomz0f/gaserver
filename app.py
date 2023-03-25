@@ -19,7 +19,7 @@ from werkzeug.utils import secure_filename
 from functools import wraps
 import bcrypt
 import pymongo
-import webview
+
 import threading
 #for fatih internet
 import certifi
@@ -119,6 +119,9 @@ def search():
 @login_required
 @app.route('/complaint', methods=["POST"])
 def sikayet():
+    if 'user_id' not in session:
+        return redirect('/ziyaretci')
+    
     title = request.form['title']
     content = request.form['content']
     comp_user = request.form['comp_user']
@@ -128,7 +131,6 @@ def sikayet():
     dosya_adi = dosya.filename
     complaint_case = str(uuid.uuid4())
     
-    user = get_session_user()
     if allowed_file(dosya_adi):
         dosya.save('./static/webimgs/'+complaint_case+'.jpg')
         db.users.update_one(user, {
@@ -217,7 +219,7 @@ def profile_update():
                 "email": email,
                 "adaNo": adaNo,
                 "parselNo": parselNo,
-                "ilTercihi": ilTercihi
+                "il": ilTercihi
             }
         }
         db.users.update_one(user, update_dict)
@@ -226,7 +228,7 @@ def profile_update():
         return render_template('profile_settings_error.html')
 
 @app.route('/sikayet/<string:comp_user_id>', methods=["GET", "POST"])
-def complaintt(comp_user_id):
+def complaint_ui(comp_user_id):
     if 'user_id' not in session:
         return redirect('/ziyaretci')
     user = get_session_user()
@@ -337,8 +339,7 @@ def favicon():
 if __name__ == "__main__":
     
     
-    webview.create_window('GaServer | Desktop Client', app)
-    webview.start()
+    app.run(host='0.0.0.0', port=8081, debug=1)
 
     #or flask run --host=0.0.0.0 --port=8080
     #or python3 app.py --host=0.0.0.0 --port=8080

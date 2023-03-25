@@ -1,4 +1,4 @@
-import { is_logged, page_index } from './stores'
+import { is_logged, page_index } from './stores.mjs'
 
 function load_page_index() {
     let page;

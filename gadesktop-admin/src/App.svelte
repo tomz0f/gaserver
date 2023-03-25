@@ -1,7 +1,6 @@
 <script>
-	import { isLogged, load_page_index } from './get_stores'
-	import { is_logged, page_index, user_data } from './stores';
-	import { submit_form, get_complaints } from './api';
+	import { isLogged, load_page_index } from './get_stores.mjs'
+	import { is_logged, page_index, user_data } from './stores.mjs';
 	import './static/loginstyle.css';
 
 	let username = "GUEST";
@@ -17,6 +16,97 @@
 		zero_to_n.push(i)
 	}
 
+	async function process_complaint_case_data(comp_id)
+	{
+		// EXPRESS_PORT IS DEFINED IN rollup.config.js
+		const data = await fetch(`http://localhost:${EXPRESS_PORT}/complaint_case`, {
+			method: "POST",
+			body: JSON.stringify({
+				comp_id: comp_id
+			}),
+			headers: {
+				"Content-Type": "application/json",
+				'Access-Control-Allow-Methods': 'OPTIONS,POST',
+				'Access-Control-Allow-Credentials': true,
+				'Access-Control-Allow-Origin': '*',
+				'X-Requested-With': '*',
+			}
+		})
+
+		const response = await data.json();
+
+		if(response.status === 200)
+		{
+			return response.data;
+		}
+	}
+
+	async function submit_form(email, secretKey)
+	{
+		// EXPRESS_PORT IS DEFINED IN rollup.config.js
+		const data = await fetch(`http://localhost:${EXPRESS_PORT}/login`, {
+			method: "POST",
+			body: JSON.stringify({
+				email: email,
+				secretKey: secretKey
+			}),
+			headers: {
+			"Content-Type": "application/json",
+			'Access-Control-Allow-Methods': 'OPTIONS,POST',
+			'Access-Control-Allow-Credentials': true,
+			'Access-Control-Allow-Origin': '*',
+			'X-Requested-With': '*',
+			}
+		})
+		const result = await data.json()
+
+		if (result.response === 200)
+		{
+			// set stores!
+			user_data.set(result.user_data);
+			is_logged.set(true)
+			page_index.set(1)
+			// set variables
+			username = result.user_data.username;
+			logged = true;
+			ui = 1;
+			window.alert(`Hoşgeldiniz, ${username}!\nSisteme erişim veriliyor...`)
+		} else if(result.response === 403){
+			window.alert('ADMIN OLMADIĞINIZ HALDE SİSTEME ERİŞİM\nSAĞLAMAYA ÇALIŞTIĞINIZDAN BANLANIYORSUNUZ.')
+			setTimeout(() => window.close(), 2000)
+		} else {
+			window.alert('GİRİŞ BAŞARISIZ!!!')
+		}
+	}
+
+	async function get_complaints(email, secretKey)
+		{
+		// EXPRESS_PORT IS DEFINED IN rollup.config.js
+		const data = await fetch(`http://localhost:${EXPRESS_PORT}/login`, {
+			method: "POST",
+			body: JSON.stringify({
+				email: email,
+				secretKey: secretKey
+			}),
+			headers: {
+			"Content-Type": "application/json",
+			'Access-Control-Allow-Methods': 'OPTIONS,POST',
+			'Access-Control-Allow-Credentials': true,
+			'Access-Control-Allow-Origin': '*',
+			'X-Requested-With': '*',
+			}
+		});
+
+		const result = await data.json();
+
+		if (result.response === 200)
+		{
+			return result.data
+		} else {
+			return "ERROR_CANNOT_GET_COMPLAINTS";
+		}
+	}
+
 	const send_form = () => {
 		submit_form(email, secretKey);
 		complaints = get_complaints(email, secretKey)
@@ -24,14 +114,12 @@
 
 	// reactives
 	let logged_reactive_component = isLogged();
-	let logged = true;
-	// let logged = logged_reactive_component ?? false;
+	let logged = logged_reactive_component ?? false;
 
 	let ui_reactive_component = load_page_index();
-	let ui = 1;
-	//let ui = ui_reactive_component ?? 0;
+	let ui = ui_reactive_component ?? 0;
 
-	let title_list = ["Ana Sayfa", "Giriş Sayfası", "Admin Panel"];
+	let title_list = ["Giriş Sayfası", "Ana Sayfa / Şikaye Değerlendirme"];
 	$: title_reactive = title_list[ui]
 </script>
 <svelte:head>
@@ -64,15 +152,18 @@
 <main>
 	<center>
 		<h1>
-			<u class="text-white my-2" style="color: white;">Şikayet Değerlendirme:</u>
+			<u class="text-white my-2" style="font-family:monospace; font-size: 2.5rem; color: white;">Şikayet Değerlendirme:</u>
 		</h1>
+		{#each complaints as complaint}
+			Sikayet: {complaint}
+		{/each}
 	</center>
 </main>
 {:else}
 {#each zero_to_n as i}
 	<br/>
 {/each}
-<center style="font-size: 3rem; display:flex; justify-content:center; align-items:center; color:white;">
+<center style="font-family: monospace !important; font-size: 3rem; display:flex; justify-content:center; align-items:center; color:white;">
 	404 Hatası: Sayfa Bulunamadı!
 </center>
 {/if}
