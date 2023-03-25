@@ -43,7 +43,7 @@ export default {
 	},
 	plugins: [
 		replace({
-			EXPRESS_PORT: process.env.EXPRESS_PORT
+			REMOTE_SERVER: process.env.REMOTE_SERVER
 		}),
 		svelte({
 			compilerOptions: {

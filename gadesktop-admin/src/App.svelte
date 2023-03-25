@@ -19,7 +19,7 @@
 	async function process_complaint_case_data(comp_id)
 	{
 		// EXPRESS_PORT IS DEFINED IN rollup.config.js
-		const data = await fetch(`http://localhost:${EXPRESS_PORT}/complaint_case`, {
+		const data = await fetch(`${REMOTE_SERVER}/complaint_case`, {
 			method: "POST",
 			body: JSON.stringify({
 				comp_id: comp_id
@@ -44,7 +44,7 @@
 	async function submit_form(email, secretKey)
 	{
 		// EXPRESS_PORT IS DEFINED IN rollup.config.js
-		const data = await fetch(`http://localhost:${EXPRESS_PORT}/login`, {
+		const data = await fetch(`${REMOTE_SERVER}/login`, {
 			method: "POST",
 			body: JSON.stringify({
 				email: email,
@@ -82,7 +82,7 @@
 	async function get_complaints(email, secretKey)
 		{
 		// EXPRESS_PORT IS DEFINED IN rollup.config.js
-		const data = await fetch(`http://localhost:${EXPRESS_PORT}/login`, {
+		const data = await fetch(`${REMOTE_SERVER}/login`, {
 			method: "POST",
 			body: JSON.stringify({
 				email: email,

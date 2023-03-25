@@ -1,4 +1,6 @@
 [submodule "gaserver-datas-and-models"]
 	path = gaserver-datas-and-models
 	url = https://github.com/yigitoo/gaserver-datas-and-models
-	
+[submodule "gadesktop-admin-backend"]
+	path = gadesktop-admin-backend
+	url = https://github.com/yigitoo/gadesktop-admin-backend

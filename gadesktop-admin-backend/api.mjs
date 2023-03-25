@@ -1,7 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import { Database } from './database.mjs'
-import { is_logged } from './stores.mjs'
 import cors from 'cors'
 import dotenv from 'dotenv'
 
@@ -28,20 +27,11 @@ const app = express();
 app.use(cors())
 app.use(bodyParser.json());
 
-app.get('/logout', function (req, res) {
-  is_logged.set(false)
-
-  res.status(200).json({
-    message: "LOGOUT_SUCCESS",
-    response: 200
-  })
-})
-
 app.post('/complaints', async function(req ,res) {
   const { email, secretKey } = req.body;
   const user = await user_client.run({email: email}, "find_one")
   let admin = await admin_client.run({}, "find_one");
-  let complaints=[];
+  let complaints = [];
 
   if(user.type === "normal" && secretKey === admin.secretKey)
   {
@@ -89,7 +79,9 @@ app.post('/complaint_case', async (req, res) => {
   }
 
   return res.status(200).json({
-    
+    status: 200,
+    data: {
+}
   })
 })
 
