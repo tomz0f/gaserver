@@ -40,6 +40,8 @@
 			return response.data;
 		}
 	}
+	
+	const logout = async () => is_logged.set(false)
 
 	async function submit_form(email, secretKey)
 	{
