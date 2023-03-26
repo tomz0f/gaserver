@@ -1,5 +1,4 @@
 #!/bin/python3
-import ssl
 import requests
 import os
 from flask import (
@@ -28,9 +27,6 @@ import certifi
 #################################
 
 project_name = "GalBul"
-
-context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-context.load_cert_chain('./certificates/certificate.crt', './certificates/private.key')
 
 def login_required(f):
     @wraps(f)
@@ -123,10 +119,7 @@ def sikayet():
         return redirect('/ziyaretci')
     
     title = request.form['title']
-    content = request.form['content']
-    comp_user = request.form['comp_user']
-    complainant = request.form['complainant']
-
+    content = requdotenv
     dosya = request.files['fileupload']
     dosya_adi = dosya.filename
     complaint_case = str(uuid.uuid4())
@@ -340,6 +333,3 @@ if __name__ == "__main__":
     
     
     app.run(host='0.0.0.0', port=8081, debug=1)
-
-    #or flask run --host=0.0.0.0 --port=8080
-    #or python3 app.py --host=0.0.0.0 --port=8080

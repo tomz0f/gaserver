@@ -4,3 +4,6 @@
 [submodule "gadesktop-admin-backend"]
 	path = gadesktop-admin-backend
 	url = https://github.com/yigitoo/gadesktop-admin-backend.git
+[submodule "gadesktop-admin"]
+	path = gadesktop-admin
+	url = https://github.com/yigitoo/gadesktop-admin.git
