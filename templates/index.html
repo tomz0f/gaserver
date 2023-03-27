@@ -9,6 +9,9 @@
   <link rel="stylesheet" href="/static/css/index.css">
   <link rel="icon" href="{{ url_for('static',filename='logo.png') }}">
   <title>{{project_name}} ~ Ana Sayfa</title>
+  <style>
+      * {will-change: transform;}
+  </style>
 </head>
 <body>
 <nav class="navbar navbar-dark bg-light justify-content-between">
@@ -92,19 +95,27 @@ function main() {
     L.marker(koordinat(38.3473424, 27.6853388), { icon: redIcon }).bindPopup("Riskli Gal Arısı, Nazilli/Aydın E: 37.8618 B: 27.2534").addTo(mymap);
     L.marker(koordinat(38.3500182, 27.6866751), { icon: redIcon }).bindPopup("Riskli Gal Arısı, Nazilli/Aydın E: 37.8618 B: 27.2534").addTo(mymap);
     L.marker(koordinat(38.3509533, 27.6856382), { icon: redIcon }).bindPopup("Riskli Gal Arısı, Nazilli/Aydın E: 37.8618 B: 27.2534").addTo(mymap);
-    getParsel(location)
-
+    
   });
 } main()
 
 const getParsel = async function (location) {
   let result = await fetch(`/parselSorgu/${location.coords.latitude}/${location.coords.longitude}`, {
     method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+			'Access-Control-Allow-Methods': 'OPTIONS,POST',
+			'Access-Control-Allow-Credentials': true,
+			'Access-Control-Allow-Origin': '*',
+			'X-Requested-With': '*',
+    }
   })
-  let parselData = await result.json();
+  
+  return result.json();
 }
   function submit_form(){
     let formm = document.querySelector("#dosyaform");
+
     formm.submit();
   }
   

@@ -9,6 +9,11 @@
    <title>{{user.username}}'ın ayarları | {{project_name}}</title>
 </head>
 <body>
+    <header style="z-index: 3 !important;" id="bg">
+        <a href='/profile/{{user._id}}' style="background-color: transparent;">
+          <img src="/static/go_back.svg" alt="Go back"/>
+        </a>
+    </header>
     <div class="login-box">
         <h2> Profil Ayarları: {{user.username}} </h2>
         <br>

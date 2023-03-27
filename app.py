@@ -27,6 +27,13 @@ import certifi
 #################################
 
 project_name = "GalBul"
+app = Flask(__name__, instance_relative_config=True)
+app.secret_key = 'yigitinsifresi'
+app.config.from_pyfile('config.py', silent=True)
+path = os.getcwd()
+
+app.config["OPENSSL_CONF"] = path+'/openssl.cnf'
+os.environ["OPENSSL_CONF"] = path+'/openssl.cnf'
 
 def login_required(f):
     @wraps(f)
@@ -45,11 +52,6 @@ cacert = certifi.where()
 client = pymongo.MongoClient(db_link, tlsCAFile=cacert,tlsAllowInvalidCertificates=True)
 db = client.galbul
 
-app = Flask(__name__, instance_relative_config=True)
-# default value during development
-app.secret_key = 'yigitinsifresi'
-# overridden if this file exists in the instance folder
-app.config.from_pyfile('config.py', silent=True)
 
 @app.route('/banned', methods=["GET"])
 def banned():

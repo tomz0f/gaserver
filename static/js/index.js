@@ -38,7 +38,7 @@ navigator.geolocation.getCurrentPosition(function (location, options = {
     
       L.marker(latlng2, { icon: redIcon }).bindPopup().addTo(mymap);
       
-    getParsel(location)
+    const parselData = getParsel(location)
 
     
 });
@@ -48,6 +48,7 @@ const getParsel = async function (location){
     method: "GET",
   })
   let parselData = await result.json();
+  return parselData;
 }
 
 const search = () => {

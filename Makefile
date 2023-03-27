@@ -1,3 +1,7 @@
+both:
+	python3 app.py &
+	python3 galbul-desktop.py
+
 website:
 	python3 app.py
 desktop:

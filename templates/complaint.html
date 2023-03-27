@@ -11,6 +11,11 @@
 </head>
 <body>
 <div class="login-box">
+    <header style="z-index: 3 !important;" id="bg">
+        <a href='/' style="background-color: transparent;">
+          <img src="/static/go_back.svg" alt="Go back"/>
+        </a>
+    </header>
     <h2 style="margin-bottom:5rem;">Şikayet et: {{ sikayet.username }}.</h2>
     <form action="/complaint" method="POST" id="sikayetform" enctype="multipart/form-data">
         <div class="user-box">
