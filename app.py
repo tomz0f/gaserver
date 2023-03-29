@@ -138,6 +138,12 @@ def backend_of_search():
     return render_template('search_results.html', wanted_users=wanted_users, session_user=session_user)
 
 @login_required
+@app.route('/fetch_map', methods=["GET"])
+def fetch_map():
+    all_parsels = db.parsel
+    return jsonify
+
+@login_required
 @app.route('/complaint', methods=["POST"])
 def sikayet():
     if 'user_id' not in session:

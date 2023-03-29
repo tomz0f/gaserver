@@ -40,7 +40,24 @@ function main() {
   var setViewLatLng = new L.LatLng(38.329355001, 28.0694747494);
   var mymap = L.map('mapid').setView(setViewLatLng, 19)
   var latlng2 = new L.LatLng(38.329355001, 28.0694747494);
+  
+  let redIcon = new L.Icon({
+      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
+    });
 
+    let greenIcon = new L.Icon({
+      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
+      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
+    });
 
   var parsel = L.polygon(
     [
@@ -70,6 +87,57 @@ function main() {
     color: 'red'
 
   }).addTo(mymap);
+
+  let parsel2 = L.polygon(
+    [
+      [27.66836, 37.86303].reverse(),
+      [27.6685, 37.86303].reverse(),
+      [27.66874, 37.86302].reverse(),
+      [27.66901, 37.86302].reverse(),
+      [27.66934, 37.86301].reverse(),
+      [27.66948, 37.86313].reverse(),
+      [27.66954, 37.86318].reverse(),
+      [27.66955, 37.8632].reverse(),
+      [27.66962, 37.86325].reverse(),
+      [27.66966, 37.86332].reverse(),
+      [27.66968, 37.86351].reverse(),
+      [27.66971, 37.86368].reverse(),
+      [27.66975, 37.86373].reverse(),
+      [27.66978, 37.86375].reverse(),
+      [27.67006, 37.86386].reverse(),
+      [27.67012, 37.86389].reverse(),
+      [27.67019, 37.86401].reverse(),
+      [27.67023, 37.86413].reverse(),
+      [27.6703, 37.86424].reverse(),
+      [27.6712, 37.86429].reverse(),
+      [27.67012, 37.86453].reverse(),
+      [27.66654, 37.86537].reverse(),
+      [27.66387, 37.86597].reverse(),
+      [27.66375, 37.866].reverse(),
+      [27.66351, 37.86605].reverse(),
+      [27.6635, 37.86599].reverse(),
+      [27.66348, 37.86587].reverse(),
+      [27.66345, 37.86569].reverse(),
+      [27.66324, 37.86446].reverse(),
+      [27.6632, 37.86423].reverse(),
+      [27.66449, 37.86413].reverse(),
+      [27.66448, 37.86389].reverse(),
+      [27.66448, 37.8636].reverse(),
+      [27.66448, 37.86298].reverse(),
+      [27.66468, 37.86299].reverse(),
+      [27.66494, 37.863].reverse(),
+      [27.66558, 37.86302].reverse(),
+      [27.6661, 37.86304].reverse(),
+      [27.66651, 37.86306].reverse(),
+      [27.66683, 37.86307].reverse(),
+      [27.66714, 37.86308].reverse(),
+      [27.66723, 37.86312].reverse(),
+      [27.66766, 37.8631].reverse(),
+      [27.668, 37.8631].reverse(),
+      [27.66811, 37.86304].reverse(),
+      [27.66836, 37.86303].reverse(),
+    ], {color: 'green'})
+
   let googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
     maxZoom: 20,
     subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
@@ -78,18 +146,10 @@ function main() {
 
   navigator.geolocation.getCurrentPosition(function (location, options = {
     enableHighAccuracy: true,
-    timeout: 500,
+    timeout: 5000,
     maximumAge: 0
   }) {
-
-    let redIcon = new L.Icon({
-      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
-      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-      shadowSize: [41, 41]
-    });
+    mymap.setView(new L.LatLng(37.865675150603856, 27.664381410442175))
 
     L.marker(latlng2, { icon: redIcon }).bindPopup("Riskli Gal Arısı, Nazilli/Aydın E: 37.8618 B: 27.2534").addTo(mymap);
     L.marker(koordinat(38.3526662, 27.6821678), { icon: redIcon }).bindPopup("Riskli Gal Arısı, Nazilli/Aydın E: 37.8618 B: 27.2534").addTo(mymap);
@@ -115,9 +175,9 @@ const getParsel = async function (location) {
   return result.json();
 }
 function submit_form(){
-  let formm = document.querySelector("#dosyaform");
+  let dosya_form = document.querySelector("#dosyaform");
 
-  formm.submit();
+  dosya_form.submit();
 }
 
 async function search()
