@@ -306,6 +306,10 @@ def guest():
         return redirect('/home')
     return render_template('guest.html', project_name=project_name)
 
+@app.route('/iframe', methods=["GET"])
+def tablet_iframe():
+    return render_template('iframe.html', project_name=project_name)
+
 @login_required
 @app.route('/home')
 @app.route('/home/', methods=['GET', 'POST'])

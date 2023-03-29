@@ -14,21 +14,6 @@
   </style>
 </head>
 <body>
-<nav class="navbar navbar-dark bg-light justify-content-between">
-    <form action='/home' style="display: inline-block;" method="POST" class="navbar-brand" id="dosyaform" enctype="multipart/form-data">
-      <input type="file" name="dosya" onchange="submit_form()">
-    </form>
-    <form action="/search" name="search_form" style="display:flex;" method="POST">
-      <input style="width: 250px;" name="query" style="width:30%; margin-right: -2.5rem;" id="queryProfile" class="form-control mr-sm-2" type="text" placeholder="Örnek: Ahmet G." aria-label="Search">
-      <button id="search" class="btn btn-outline-success my-2 my-sm-0" type="submit">Profili Ara</button>
-    </form>
-    
-    <a href="/profile/{{user._id}}" style="margin-top: -70px; margin-left: 5%;">
-      <span>
-        <img src="https://avatars.dicebear.com/api/micah/{{user._id}}.svg" style="display:inline-block; margin-left: 5%; position: fixed; top: 10px; right: 15px; width:2.5rem; height:2.5rem; background-color: #2fe203; border: 1px solid white; border-radius: 50%;" alt="{{user.username}}" />
-      </span>
-    </a>
-</nav>
 <div id="mapid"style="border-radius: 2.5px;height: 100%; width: 100%;"></div>
 <script>
 function koordinat(enlem, boylam) {
@@ -135,8 +120,8 @@ function main() {
       [27.66766, 37.8631].reverse(),
       [27.668, 37.8631].reverse(),
       [27.66811, 37.86304].reverse(),
-      [27.66836, 37.86303].reverse()
-    ], {color: 'red'}).addTo(mymap);
+      [27.66836, 37.86303].reverse(),
+    ], {color: 'green'})
 
   let googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
     maxZoom: 20,
@@ -156,7 +141,7 @@ function main() {
     L.marker(koordinat(38.3473424, 27.6853388), { icon: redIcon }).bindPopup("Riskli Gal Arısı, Nazilli/Aydın E: 37.8618 B: 27.2534").addTo(mymap);
     L.marker(koordinat(38.3500182, 27.6866751), { icon: redIcon }).bindPopup("Riskli Gal Arısı, Nazilli/Aydın E: 37.8618 B: 27.2534").addTo(mymap);
     L.marker(koordinat(38.3509533, 27.6856382), { icon: redIcon }).bindPopup("Riskli Gal Arısı, Nazilli/Aydın E: 37.8618 B: 27.2534").addTo(mymap);
-    L.marker([37.865944057644505, 27.664202601922188], { icon: greenIcon }).bindPopup("Riskli Gal Arısı yok, Erbeyli/İncir Araştırma Enstitüsü").addTo(mymap);
+    
   });
 } main()
 
@@ -174,27 +159,6 @@ const getParsel = async function (location) {
   
   return result.json();
 }
-function submit_form(){
-  let dosya_form = document.querySelector("#dosyaform");
-
-  dosya_form.submit();
-}
-
-async function search()
-{
-  let formData = document.querySelector('#queryProfile').value;
-  let data = await fetch(`/search/${encodeURI(formData)}`, {
-    method: "GET"
-    // method: "POST",
-    // body: JSON.stringify({
-    //   query: formData
-    // }),
-    // headers: {
-    //   "Content-Type": "application/json"
-    // }
-  })
-}
-
 </script>
 </body>
 </html>
