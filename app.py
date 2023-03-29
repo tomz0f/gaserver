@@ -18,7 +18,7 @@ from werkzeug.utils import secure_filename
 from functools import wraps
 import bcrypt
 import pymongo
-
+import urllib.parse
 import threading
 #for fatih internet
 import certifi
@@ -99,20 +99,43 @@ def register():
     else:
         return render_template('user_exist.html')
 
+# @login_required
+# @app.route('/arat', methods=['GET'])
+# def search():
+#     if 'user_id' not in session:
+#         return redirect('/ziyaretci')
+
+#     # Get the search query from the reques1t
+#     query = request.args.get('query')
+
+#     # Search the database for users matching the query
+#     users = db.users.find({ 'name': { '$regex': query } })
+    
+#     # Render the search results in a Jinja template
+#     return render_template('search_results.html', users=users, project_name=project_name)
+
+
 @login_required
-@app.route('/search', methods=['GET'])
-def search():
+@app.route('/search', methods=["POST", "GET"])
+def backend_of_search():
     if 'user_id' not in session:
         return redirect('/ziyaretci')
-
-    # Get the search query from the reques1t
-    query = request.args.get('query')
-
-    # Search the database for users matching the query
-    users = db.users.find({ 'name': { '$regex': query } })
+    session_user = get_session_user()
     
-    # Render the search results in a Jinja template
-    return render_template('search_results.html', users=users, project_name=project_name)
+    query = request.form['query'].lower()
+    username_query = urllib.parse.unquote(query).lower()  
+    
+    users = db.users.find({})
+    wanted_users = []
+    for userx in users:
+        if userx['username'].lower() == username_query.lower():
+            wanted_users.append(userx)
+        else:
+            pass
+    
+    if len(wanted_users) < 1:
+        return render_template('search_not_found.html')
+    return render_template('search_results.html', wanted_users=wanted_users, session_user=session_user)
 
 @login_required
 @app.route('/complaint', methods=["POST"])
@@ -121,7 +144,7 @@ def sikayet():
         return redirect('/ziyaretci')
     
     title = request.form['title']
-    content = requdotenv
+    content = request.form['content']
     dosya = request.files['fileupload']
     dosya_adi = dosya.filename
     complaint_case = str(uuid.uuid4())

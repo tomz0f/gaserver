@@ -15,14 +15,15 @@
 </head>
 <body>
 <nav class="navbar navbar-dark bg-light justify-content-between">
-    <form style="display: inline-block;" method="POST" class="navbar-brand" id="dosyaform" enctype="multipart/form-data">
+    <form action='/home' style="display: inline-block;" method="POST" class="navbar-brand" id="dosyaform" enctype="multipart/form-data">
       <input type="file" name="dosya" onchange="submit_form()">
     </form>
-    <input name="query" style="width:30%; margin-right: -2.5rem;" id="query" class="form-control mr-sm-2" type="text" placeholder="Örnek: Ahmet G." aria-label="Search">
-    <button id="search" class="btn btn-outline-success my-2 my-sm-0" onclick="search()">Profili Ara</button>
+    <form action="/search" name="search_form" style="display:flex;" method="POST">
+      <input style="width: 250px;" name="query" style="width:30%; margin-right: -2.5rem;" id="queryProfile" class="form-control mr-sm-2" type="text" placeholder="Örnek: Ahmet G." aria-label="Search">
+      <button id="search" class="btn btn-outline-success my-2 my-sm-0" type="submit">Profili Ara</button>
+    </form>
     
-    
-    <a href="/profile/{{user._id}}" style="margin-left: 5%;">
+    <a href="/profile/{{user._id}}" style="margin-top: -70px; margin-left: 5%;">
       <span>
         <img src="https://avatars.dicebear.com/api/micah/{{user._id}}.svg" style="display:inline-block; margin-left: 5%; position: fixed; top: 10px; right: 15px; width:2.5rem; height:2.5rem; background-color: #2fe203; border: 1px solid white; border-radius: 50%;" alt="{{user.username}}" />
       </span>
@@ -113,12 +114,26 @@ const getParsel = async function (location) {
   
   return result.json();
 }
-  function submit_form(){
-    let formm = document.querySelector("#dosyaform");
+function submit_form(){
+  let formm = document.querySelector("#dosyaform");
 
-    formm.submit();
-  }
-  
+  formm.submit();
+}
+
+async function search()
+{
+  let formData = document.querySelector('#queryProfile').value;
+  let data = await fetch(`/search/${encodeURI(formData)}`, {
+    method: "GET"
+    // method: "POST",
+    // body: JSON.stringify({
+    //   query: formData
+    // }),
+    // headers: {
+    //   "Content-Type": "application/json"
+    // }
+  })
+}
 
 </script>
 </body>
