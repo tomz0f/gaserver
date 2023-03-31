@@ -101,26 +101,43 @@ function main() {
   let googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
     maxZoom: 20,
     subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
-  });X
+  });
   googleSat.addTo(mymap)
+  mymap.setView(new L.LatLng(37.908686, 28.322386))
+  let mainMarker = L.marker([37.908694, 28.322389], { icon: greenIcon }).bindPopup("Riskli Gal Arısı yok, Nazilli/Aydın").addTo(mymap);
+  parsel2.setStyle({fillColor: GREEN_COLOR});
 
   navigator.geolocation.getCurrentPosition(function (location, options = {
     enableHighAccuracy: true,
     timeout: 5000,
     maximumAge: 0
   }) {
-    mymap.setView(new L.LatLng(37.865675150603856, 27.664381410442175))
 
     L.marker(latlng2, { icon: redIcon }).bindPopup("Riskli Gal Arısı, Nazilli/Aydın E: 37.8618 B: 27.2534").addTo(mymap);
     L.marker(koordinat(38.3526662, 27.6821678), { icon: redIcon }).bindPopup("Riskli Gal Arısı, Nazilli/Aydın E: 37.8618 B: 27.2534").addTo(mymap);
     L.marker(koordinat(38.3473424, 27.6853388), { icon: redIcon }).bindPopup("Riskli Gal Arısı, Nazilli/Aydın E: 37.8618 B: 27.2534").addTo(mymap);
     L.marker(koordinat(38.3500182, 27.6866751), { icon: redIcon }).bindPopup("Riskli Gal Arısı, Nazilli/Aydın E: 37.8618 B: 27.2534").addTo(mymap);
     L.marker(koordinat(38.3509533, 27.6856382), { icon: redIcon }).bindPopup("Riskli Gal Arısı, Nazilli/Aydın E: 37.8618 B: 27.2534").addTo(mymap);
-    L.marker([37.865944057644505, 27.664202601922188], { icon: greenIcon }).bindPopup("Riskli Gal Arısı yok, Erbeyli/İncir Araştırma Enstitüsü").addTo(mymap);
-    polygon.setStyle({fillColor: '#'});
-    polygon.setStyle({fillColor: '#'});
   });
+
+  const bodyElement = document.querySelector('body');
+
+  function listenZ(event)
+  {
+    let key = event.key;
+    if(key == "z" || key == "Z")
+    {
+      mymap.removeLayer(mainMarker)
+      parsel2.setStyle({fillColor: RED_COLOR})
+      L.marker([37.908694, 28.322389], { icon: redIcon }).bindPopup("Riskli Gal Arısı yok, Nazilli/Aydın").addTo(mymap);
+    }
+  }
+
+  bodyElement.onkeydown = listenZ
 } main()
+
+
+
 
 const getParsel = async function (location) {
   let result = await fetch(`/parselSorgu/${location.coords.latitude}/${location.coords.longitude}`, {
@@ -156,7 +173,6 @@ async function search()
     // }
   })
 }
-setInterval()
 </script>
 </body>
 </html>
