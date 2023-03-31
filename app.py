@@ -69,7 +69,7 @@ def register():
     adaNo = request.form['adaNo']
     parselNo = request.form['parselNo']
     ilTercihi = request.form['ilTercihi']
-    
+
     # Şifreyi hashleyip veritabanına eklemek için
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
@@ -95,7 +95,7 @@ def register():
         user = db.users.find_one({'email': email})
         session['user_id'] = str(user['_id'])
         return redirect('/home')
-        
+
     else:
         return render_template('user_exist.html')
 
@@ -110,7 +110,7 @@ def register():
 
 #     # Search the database for users matching the query
 #     users = db.users.find({ 'name': { '$regex': query } })
-    
+
 #     # Render the search results in a Jinja template
 #     return render_template('search_results.html', users=users, project_name=project_name)
 
@@ -121,10 +121,10 @@ def backend_of_search():
     if 'user_id' not in session:
         return redirect('/ziyaretci')
     session_user = get_session_user()
-    
+
     query = request.form['query'].lower()
-    username_query = urllib.parse.unquote(query).lower()  
-    
+    username_query = urllib.parse.unquote(query).lower()
+
     users = db.users.find({})
     wanted_users = []
     for userx in users:
@@ -132,7 +132,7 @@ def backend_of_search():
             wanted_users.append(userx)
         else:
             pass
-    
+
     if len(wanted_users) < 1:
         return render_template('search_not_found.html')
     return render_template('search_results.html', wanted_users=wanted_users, session_user=session_user)
@@ -140,7 +140,7 @@ def backend_of_search():
 @login_required
 @app.route('/fetch_map', methods=["GET"])
 def fetch_map():
-    all_parsels = db.parsel
+    all_parsels = db.parsel.find({})
     return jsonify
 
 @login_required
@@ -148,13 +148,18 @@ def fetch_map():
 def sikayet():
     if 'user_id' not in session:
         return redirect('/ziyaretci')
-    
+    user = get_session_user()
+
     title = request.form['title']
     content = request.form['content']
     dosya = request.files['fileupload']
+
+    comp_user = request.form['comp_user']
+    complainant = request.form['complainant']
+
     dosya_adi = dosya.filename
     complaint_case = str(uuid.uuid4())
-    
+
     if allowed_file(dosya_adi):
         dosya.save('./static/webimgs/'+complaint_case+'.jpg')
         db.users.update_one(user, {
@@ -162,7 +167,7 @@ def sikayet():
         })
     else:
         return render_template('upload_error.html')
-    
+
     db.complaints.insert_one({
         "_id": complaint_case,
         "title": title,
@@ -365,6 +370,6 @@ def favicon():
 
 
 if __name__ == "__main__":
-    
-    
+
+
     app.run(host='0.0.0.0', port=8081, debug=1)

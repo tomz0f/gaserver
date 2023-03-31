@@ -22,7 +22,7 @@
       <input style="width: 250px;" name="query" style="width:30%; margin-right: -2.5rem;" id="queryProfile" class="form-control mr-sm-2" type="text" placeholder="Örnek: Ahmet G." aria-label="Search">
       <button id="search" class="btn btn-outline-success my-2 my-sm-0" type="submit">Profili Ara</button>
     </form>
-    
+
     <a href="/profile/{{user._id}}" style="margin-top: -70px; margin-left: 5%;">
       <span>
         <img src="https://avatars.dicebear.com/api/micah/{{user._id}}.svg" style="display:inline-block; margin-left: 5%; position: fixed; top: 10px; right: 15px; width:2.5rem; height:2.5rem; background-color: #2fe203; border: 1px solid white; border-radius: 50%;" alt="{{user.username}}" />
@@ -40,7 +40,7 @@ function main() {
   var setViewLatLng = new L.LatLng(38.329355001, 28.0694747494);
   var mymap = L.map('mapid').setView(setViewLatLng, 19)
   var latlng2 = new L.LatLng(38.329355001, 28.0694747494);
-  
+
   let redIcon = new L.Icon({
       iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
       shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -58,6 +58,11 @@ function main() {
       popupAnchor: [1, -34],
       shadowSize: [41, 41]
     });
+
+
+   const RED_COLOR = "#E62315";
+   const GREEN_COLOR = "#4DC412";
+
 
   var parsel = L.polygon(
     [
@@ -90,58 +95,13 @@ function main() {
 
   let parsel2 = L.polygon(
     [
-      [27.66836, 37.86303].reverse(),
-      [27.6685, 37.86303].reverse(),
-      [27.66874, 37.86302].reverse(),
-      [27.66901, 37.86302].reverse(),
-      [27.66934, 37.86301].reverse(),
-      [27.66948, 37.86313].reverse(),
-      [27.66954, 37.86318].reverse(),
-      [27.66955, 37.8632].reverse(),
-      [27.66962, 37.86325].reverse(),
-      [27.66966, 37.86332].reverse(),
-      [27.66968, 37.86351].reverse(),
-      [27.66971, 37.86368].reverse(),
-      [27.66975, 37.86373].reverse(),
-      [27.66978, 37.86375].reverse(),
-      [27.67006, 37.86386].reverse(),
-      [27.67012, 37.86389].reverse(),
-      [27.67019, 37.86401].reverse(),
-      [27.67023, 37.86413].reverse(),
-      [27.6703, 37.86424].reverse(),
-      [27.6712, 37.86429].reverse(),
-      [27.67012, 37.86453].reverse(),
-      [27.66654, 37.86537].reverse(),
-      [27.66387, 37.86597].reverse(),
-      [27.66375, 37.866].reverse(),
-      [27.66351, 37.86605].reverse(),
-      [27.6635, 37.86599].reverse(),
-      [27.66348, 37.86587].reverse(),
-      [27.66345, 37.86569].reverse(),
-      [27.66324, 37.86446].reverse(),
-      [27.6632, 37.86423].reverse(),
-      [27.66449, 37.86413].reverse(),
-      [27.66448, 37.86389].reverse(),
-      [27.66448, 37.8636].reverse(),
-      [27.66448, 37.86298].reverse(),
-      [27.66468, 37.86299].reverse(),
-      [27.66494, 37.863].reverse(),
-      [27.66558, 37.86302].reverse(),
-      [27.6661, 37.86304].reverse(),
-      [27.66651, 37.86306].reverse(),
-      [27.66683, 37.86307].reverse(),
-      [27.66714, 37.86308].reverse(),
-      [27.66723, 37.86312].reverse(),
-      [27.66766, 37.8631].reverse(),
-      [27.668, 37.8631].reverse(),
-      [27.66811, 37.86304].reverse(),
-      [27.66836, 37.86303].reverse()
+      [28.32179, 37.90713].reverse(), [28.32182, 37.90714].reverse(), [28.32184, 37.90724].reverse(), [28.32192, 37.90732].reverse(), [28.32199, 37.90736].reverse(), [28.32198, 37.90737].reverse(), [28.32196, 37.90741].reverse(), [28.32196, 37.90743].reverse(), [28.32196, 37.90745].reverse(), [28.32198, 37.90745].reverse(), [28.32205, 37.90744].reverse(), [28.32214, 37.90743].reverse(), [28.32222, 37.90742].reverse(), [28.32237, 37.9074].reverse(), [28.32241, 37.9074].reverse(), [28.32256, 37.90738].reverse(), [28.32269, 37.90792].reverse(), [28.32271, 37.90802].reverse(), [28.32282, 37.90847].reverse(), [28.32282, 37.90851].reverse(), [28.32282, 37.90854].reverse(), [28.32282, 37.90858].reverse(), [28.32279, 37.90876].reverse(), [28.32278, 37.90878].reverse(), [28.32276, 37.9088].reverse(), [28.32273, 37.90881].reverse(), [28.32269, 37.90881].reverse(), [28.32248, 37.9088].reverse(), [28.32169, 37.9087].reverse(), [28.3214, 37.90866].reverse(), [28.32147, 37.90838].reverse(), [28.32149, 37.90828].reverse(), [28.3215, 37.90826].reverse(), [28.32151, 37.90823].reverse(), [28.32154, 37.9081].reverse(), [28.32084, 37.90789].reverse(), [28.32106, 37.90772].reverse(), [28.3212, 37.9076].reverse(), [28.32179, 37.90713].reverse()
     ], {color: 'red'}).addTo(mymap);
 
   let googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
     maxZoom: 20,
     subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
-  });
+  });X
   googleSat.addTo(mymap)
 
   navigator.geolocation.getCurrentPosition(function (location, options = {
@@ -157,6 +117,8 @@ function main() {
     L.marker(koordinat(38.3500182, 27.6866751), { icon: redIcon }).bindPopup("Riskli Gal Arısı, Nazilli/Aydın E: 37.8618 B: 27.2534").addTo(mymap);
     L.marker(koordinat(38.3509533, 27.6856382), { icon: redIcon }).bindPopup("Riskli Gal Arısı, Nazilli/Aydın E: 37.8618 B: 27.2534").addTo(mymap);
     L.marker([37.865944057644505, 27.664202601922188], { icon: greenIcon }).bindPopup("Riskli Gal Arısı yok, Erbeyli/İncir Araştırma Enstitüsü").addTo(mymap);
+    polygon.setStyle({fillColor: '#'});
+    polygon.setStyle({fillColor: '#'});
   });
 } main()
 
@@ -171,7 +133,7 @@ const getParsel = async function (location) {
 			'X-Requested-With': '*',
     }
   })
-  
+
   return result.json();
 }
 function submit_form(){
@@ -194,7 +156,7 @@ async function search()
     // }
   })
 }
-
+setInterval()
 </script>
 </body>
 </html>

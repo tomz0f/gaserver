@@ -25,7 +25,7 @@ function main() {
   var setViewLatLng = new L.LatLng(38.329355001, 28.0694747494);
   var mymap = L.map('mapid').setView(setViewLatLng, 19)
   var latlng2 = new L.LatLng(38.329355001, 28.0694747494);
-  
+
   let redIcon = new L.Icon({
       iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
       shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -141,7 +141,7 @@ function main() {
     L.marker(koordinat(38.3473424, 27.6853388), { icon: redIcon }).bindPopup("Riskli Gal Arısı, Nazilli/Aydın E: 37.8618 B: 27.2534").addTo(mymap);
     L.marker(koordinat(38.3500182, 27.6866751), { icon: redIcon }).bindPopup("Riskli Gal Arısı, Nazilli/Aydın E: 37.8618 B: 27.2534").addTo(mymap);
     L.marker(koordinat(38.3509533, 27.6856382), { icon: redIcon }).bindPopup("Riskli Gal Arısı, Nazilli/Aydın E: 37.8618 B: 27.2534").addTo(mymap);
-    
+
   });
 } main()
 
@@ -156,7 +156,7 @@ const getParsel = async function (location) {
 			'X-Requested-With': '*',
     }
   })
-  
+
   return result.json();
 }
 </script>
