@@ -96,7 +96,7 @@ function main() {
   let parsel2 = L.polygon(
     [
       [28.32179, 37.90713].reverse(), [28.32182, 37.90714].reverse(), [28.32184, 37.90724].reverse(), [28.32192, 37.90732].reverse(), [28.32199, 37.90736].reverse(), [28.32198, 37.90737].reverse(), [28.32196, 37.90741].reverse(), [28.32196, 37.90743].reverse(), [28.32196, 37.90745].reverse(), [28.32198, 37.90745].reverse(), [28.32205, 37.90744].reverse(), [28.32214, 37.90743].reverse(), [28.32222, 37.90742].reverse(), [28.32237, 37.9074].reverse(), [28.32241, 37.9074].reverse(), [28.32256, 37.90738].reverse(), [28.32269, 37.90792].reverse(), [28.32271, 37.90802].reverse(), [28.32282, 37.90847].reverse(), [28.32282, 37.90851].reverse(), [28.32282, 37.90854].reverse(), [28.32282, 37.90858].reverse(), [28.32279, 37.90876].reverse(), [28.32278, 37.90878].reverse(), [28.32276, 37.9088].reverse(), [28.32273, 37.90881].reverse(), [28.32269, 37.90881].reverse(), [28.32248, 37.9088].reverse(), [28.32169, 37.9087].reverse(), [28.3214, 37.90866].reverse(), [28.32147, 37.90838].reverse(), [28.32149, 37.90828].reverse(), [28.3215, 37.90826].reverse(), [28.32151, 37.90823].reverse(), [28.32154, 37.9081].reverse(), [28.32084, 37.90789].reverse(), [28.32106, 37.90772].reverse(), [28.3212, 37.9076].reverse(), [28.32179, 37.90713].reverse()
-    ], {color: 'red'}).addTo(mymap);
+    ], {color: GREEN_COLOR}).addTo(mymap);
 
   let googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
     maxZoom: 20,
@@ -127,9 +127,11 @@ function main() {
     let key = event.key;
     if(key == "z" || key == "Z")
     {
-      mymap.removeLayer(mainMarker)
-      parsel2.setStyle({fillColor: RED_COLOR})
-      L.marker([37.908694, 28.322389], { icon: redIcon }).bindPopup("Riskli Gal Arısı yok, Nazilli/Aydın").addTo(mymap);
+      setTimeout(() => {
+        mymap.removeLayer(mainMarker)
+        parsel2.setStyle({fillColor: RED_COLOR, color: RED_COLOR})
+        L.marker([37.908694, 28.322389], { icon: redIcon }).bindPopup("Riskli Gal Arısı yok, Nazilli/Aydın").addTo(mymap);
+      }, 4000)
     }
   }
 
