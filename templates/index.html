@@ -16,8 +16,8 @@
 <body>
 <nav class="navbar navbar-dark bg-light justify-content-between">
     <form action='/home' style="display: inline-block;" method="POST" class="navbar-brand" id="dosyaform" enctype="multipart/form-data">
-      <label for="dosya" class="btn" style="padding: 0px; margin: 0px; color: white; background-color: #2fe203; padding: 1rem; filter: drop-shadow(0 0 0.75rem #2fe203); margin-bottom: 0px;">İhbar amaçlı resim yükle!</label>
-      <input type="file" name="dosya" style="visibility: hidden;" onchange="submit_form()">
+      <label for="dosyainput" class="btn" style="padding: 0px; margin: 0px; color: white; background-color: #2fe203; padding: 1rem; filter: drop-shadow(0 0 0.75rem #2fe203); margin-bottom: 0px;">İhbar amaçlı resim yükle!</label>
+      <input type="file" name="dosya" id = "dosyainput" style="visibility: hidden;" onchange="submit_form()">
     </form>
     <form action="/search" name="search_form" style="display:flex;" method="POST" style="margin-left: -20.5rem;">
       <input style="width: 500px;" name="query" style="width:100%; margin-right: 10rem;" id="queryProfile" class="form-control mr-sm-2" type="text" placeholder="Örnek: Ahmet G." aria-label="Search">
