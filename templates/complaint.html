@@ -7,7 +7,7 @@
     <link rel="icon" href="{{ url_for('static',filename='logo.png') }}">
     <link rel="stylesheet" href="/static/css/loginsignupstyle.css">
     <link rel="stylesheet" href="/static/css/complaint.css">
-    <title>{{user.username}}'in Şikayeti | GalBul</title>
+    <title>{{user.username}}'in İhbarı | GalBul</title>
 </head>
 <body>
 <div class="login-box">
@@ -16,10 +16,10 @@
           <img src="/static/go_back.svg" alt="Go back"/>
         </a>
     </header>
-    <h2 style="margin-bottom:5rem;">Şikayet et: {{ sikayet.username }}.</h2>
+    <h2 style="margin-bottom:5rem;">İhbar et: {{ sikayet.username }}.</h2>
     <form action="/complaint" method="POST" id="sikayetform" enctype="multipart/form-data">
         <div class="user-box">
-            <input type="text" name="title" placeholder="Şikayet Başlığı" required="">
+            <input type="text" name="title" placeholder="İhbar Başlığı" required="">
         </div>
         <div class="user-box">
             <input type="file" name="fileupload" required="">
@@ -27,7 +27,7 @@
         <div style="margin-bottom: 1rem;">
             <textarea name="complainant" style="display: none;">{{ user._id }}</textarea>
             <textarea name="comp_user" style="display: none;">{{ sikayet._id }}</textarea>
-            <textarea rows="10" cols="40" name="content" form="sikayetform" placeholder="Şikayet metni..." required=""></textarea>
+            <textarea rows="10" cols="40" name="content" form="sikayetform" placeholder="İhbar metni..." required=""></textarea>
         </div>
         <a href="#">
             <span></span>
