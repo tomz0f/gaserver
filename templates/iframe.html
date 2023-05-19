@@ -15,24 +15,27 @@
   </style>
 </head>
 <body>
+<nav class="navbar navbar-dark bg-light justify-content-between">
+    <form action='/home' style="display: inline-block;" method="POST" class="navbar-brand" id="dosyaform" enctype="multipart/form-data">
+      <label for="dosyainput" class="btn" style="padding: 0px; margin: 0px; color: white; background-color: #2fe203; padding: 1rem; filter: drop-shadow(0 0 0.75rem #2fe203); margin-bottom: 0px;">İhbar amaçlı resim yükle!</label>
+      <input type="file" name="dosya" id = "dosyainput" style="visibility: hidden;" onchange="submit_form()">
+    </form>
+    <form action="/search" name="search_form" style="display:flex;" method="POST" style="margin-left: -20.5rem;">
+      <input style="width: 500px;" name="query" style="width:100%; margin-right: 10rem;" id="queryProfile" class="form-control mr-sm-2" type="text" placeholder="Örnek: Ahmet G." aria-label="Search">
+      <button id="search" class="btn btn-outline-success my-2 my-sm-0" type="submit">Profili Ara</button>
+    </form>
+
+    <a href="/profile/{{user._id}}" style="margin-top: -70px; margin-left: 5%;">
+      <span>
+        <img src="https://avatars.dicebear.com/api/micah/{{user._id}}.svg" style="display:inline-block; margin-left: 5%; position: fixed; top: 10px; right: 15px; width:2.5rem; height:2.5rem; background-color: #2fe203; border: 1px solid white; border-radius: 50%;" alt="{{user.username}}" />
+      </span>
+    </a>
+</nav>
 <div id="mapid"style="border-radius: 2.5px;height: 100%; width: 100%;"></div>
 <script>
 function koordinat(enlem, boylam) {
   return new L.LatLng(enlem, boylam)
 }
-
-addEventListener("click", function() {
-    var
-          el = document.documentElement
-        , rfs =
-               el.requestFullScreen
-            || el.webkitRequestFullScreen
-            || el.mozRequestFullScreen
-    ;
-    rfs.call(el);
-});
-
-
 function main() {
 
   let parselData;
