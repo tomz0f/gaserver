@@ -1,4 +1,4 @@
-[submodule "gaserver-datas-and-models"]
+[submodule "galbul-datas-and-models"]
 	path = galbul-datas-and-models
 	url = https://github.com/yigitoo/galbul-datas-and-models
 [submodule "gadesktop-admin-backend"]
