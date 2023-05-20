@@ -1,6 +1,6 @@
 [submodule "galbul-datas-and-models"]
 	path = galbul-datas-and-models
-	url = https://github.com/yigitoo/galbul-datas-and-models
+	url = https://github.com/yigitoo/galbul-datas-and-models.git
 [submodule "gadesktop-admin-backend"]
 	path = gadesktop-admin-backend
 	url = https://github.com/yigitoo/gadesktop-admin-backend.git
