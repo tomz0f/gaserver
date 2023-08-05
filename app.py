@@ -47,7 +47,7 @@ def login_required(f):
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 ERR_CODES = [400, 401, 403, 404, 500, 502, 503, 504]
 
-db_link = "mongodb+srv://yigit:yigitinsifresi@projectdatabasegalbul.ixx82u7.mongodb.net/test"
+db_link = os.getenv('DB_URI')
 cacert = certifi.where()
 client = pymongo.MongoClient(db_link, tlsCAFile=cacert,tlsAllowInvalidCertificates=True)
 db = client.galbul
